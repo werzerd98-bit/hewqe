@@ -58,6 +58,16 @@ public final class ModBlocks {
     public static final Block CASH_REGISTER = register("cash_register",
             new CashRegisterBlock(FabricBlockSettings.create().strength(3.0f).sounds(BlockSoundGroup.METAL)));
 
+    /** Секция большой двери: неразрушаема в выживании, открывается сигналом редстоуна. */
+    public static final Block SECURITY_DOOR = register("security_door",
+            new SecurityDoorBlock(FabricBlockSettings.create().strength(-1.0f, 3600000.0f).nonOpaque().sounds(BlockSoundGroup.METAL)));
+
+    public static final Block CODE_PANEL = register("code_panel",
+            new CodePanelBlock(FabricBlockSettings.create().strength(3.0f, 6.0f).sounds(BlockSoundGroup.METAL)));
+
+    public static final Block ESCAPE_VAN = register("escape_van",
+            new EscapeVanBlock(FabricBlockSettings.create().strength(5.0f, 6.0f).nonOpaque().sounds(BlockSoundGroup.METAL)));
+
     private static Block register(String name, Block block) {
         return register(name, block, new FabricItemSettings());
     }

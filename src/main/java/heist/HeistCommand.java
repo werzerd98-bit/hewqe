@@ -27,7 +27,9 @@ public final class HeistCommand {
                         .requires(src -> src.hasPermissionLevel(2))
                         .then(CommandManager.literal("build")
                                 .then(CommandManager.literal("bank").executes(ctx -> build(ctx.getSource(), true)))
-                                .then(CommandManager.literal("jewelry").executes(ctx -> build(ctx.getSource(), false))))
+                                .then(CommandManager.literal("jewelry").executes(ctx -> build(ctx.getSource(), false)))
+                                .then(CommandManager.literal("door").executes(ctx -> buildExtra(ctx.getSource(), true)))
+                                .then(CommandManager.literal("van").executes(ctx -> buildExtra(ctx.getSource(), false))))
                         .then(CommandManager.literal("kit").executes(ctx -> kit(ctx.getSource())))
                         .then(CommandManager.literal("note").executes(ctx -> note(ctx.getSource())))));
     }
@@ -60,16 +62,36 @@ public final class HeistCommand {
         return 1;
     }
 
+    private static int buildExtra(ServerCommandSource src, boolean door) throws CommandSyntaxException {
+        ServerPlayerEntity player = src.getPlayerOrThrow();
+        ServerWorld world = src.getWorld();
+        if (door) {
+            BuildingBuilder.door(world, player.getBlockPos().down().add(-3, 0, 3));
+            src.sendFeedback(() -> Text.literal("Большая дверь 3×3 построена перед тобой. Открывается зелёной картой или кодом (записка в сундуке)."), true);
+        } else {
+            net.minecraft.util.math.Direction face = player.getHorizontalFacing();
+            BlockPos p = player.getBlockPos().offset(face, 3);
+            world.setBlockState(p, ModBlocks.ESCAPE_VAN.getDefaultState().with(EscapeVanBlock.FACING, face.getOpposite()));
+            src.sendFeedback(() -> Text.literal("Фургон поставлен. Брось сумку рядом или нажми ПКМ с сумкой в левой руке."), true);
+        }
+        return 1;
+    }
+
     private static int note(ServerCommandSource src) throws CommandSyntaxException {
         ServerPlayerEntity player = src.getPlayerOrThrow();
         HitResult hit = player.raycast(8.0, 0.0f, false);
-        if (hit instanceof BlockHitResult bhr
-                && src.getWorld().getBlockEntity(bhr.getBlockPos()) instanceof SafeBlockEntity safe) {
-            player.giveItemStack(ModItems.codeNote(safe.getCode(), "Код от сейфа"));
-            src.sendFeedback(() -> Text.literal("Записка с кодом выдана."), false);
-            return 1;
+        if (hit instanceof BlockHitResult bhr) {
+            net.minecraft.block.entity.BlockEntity be = src.getWorld().getBlockEntity(bhr.getBlockPos());
+            String code = null;
+            if (be instanceof SafeBlockEntity safe) code = safe.getCode();
+            else if (be instanceof CodePanelBlockEntity panel) code = panel.getCode();
+            if (code != null) {
+                player.giveItemStack(ModItems.codeNote(code, "Код"));
+                src.sendFeedback(() -> Text.literal("Записка с кодом выдана."), false);
+                return 1;
+            }
         }
-        src.sendError(Text.literal("Смотри на сейф (до 8 блоков)."));
+        src.sendError(Text.literal("Смотри на сейф или кодовую панель (до 8 блоков)."));
         return 0;
     }
 }

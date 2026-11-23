@@ -30,6 +30,9 @@ public class HeistMod implements ModInitializer {
                         entries.add(ModBlocks.READER_GREEN);
                         entries.add(ModBlocks.READER_BLUE);
                         entries.add(ModBlocks.READER_RED);
+                        entries.add(ModBlocks.SECURITY_DOOR);
+                        entries.add(ModBlocks.CODE_PANEL);
+                        entries.add(ModBlocks.ESCAPE_VAN);
                         entries.add(ModBlocks.CAMERA);
                         entries.add(ModBlocks.COMPUTER);
                         entries.add(ModBlocks.DISPLAY_CASE);

@@ -22,6 +22,8 @@ public class HeistClient implements ClientModInitializer {
         BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.DISPLAY_CASE_FULL, RenderLayer.getTranslucent());
         BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.PAINTING, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.CAMERA, RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.ESCAPE_VAN, RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.SECURITY_DOOR, RenderLayer.getCutout());
 
         ClientTickEvents.END_CLIENT_TICK.register(CameraView::tick);
         HudRenderCallback.EVENT.register(CameraView::renderHud);

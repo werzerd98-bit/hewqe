@@ -34,6 +34,10 @@ public final class BuildingBuilder {
         new BuildingBuilder(w, origin).buildBank();
     }
 
+    public static void door(ServerWorld w, BlockPos origin) {
+        new BuildingBuilder(w, origin).buildDoor();
+    }
+
     public static void jewelry(ServerWorld w, BlockPos origin) {
         new BuildingBuilder(w, origin).buildJewelry();
     }
@@ -76,6 +80,13 @@ public final class BuildingBuilder {
 
     private void cashRegister(int x, int y, int z, Direction facing) {
         set(x, y, z, ModBlocks.CASH_REGISTER.getDefaultState().with(CashRegisterBlock.FACING, facing));
+    }
+
+    private void panel(int x, int y, int z, Direction face, String code) {
+        set(x, y, z, ModBlocks.CODE_PANEL.getDefaultState().with(CodePanelBlock.FACING, face));
+        if (w.getBlockEntity(o.add(x, y, z)) instanceof CodePanelBlockEntity p) {
+            p.setCode(code);
+        }
     }
 
     private void camera(int x, int y, int z, Direction facing) {
@@ -238,6 +249,33 @@ public final class BuildingBuilder {
         lamp(9, 4, 11);
         lamp(3, 4, 11);
         hangingLantern(16, 4, 11);
+    }
+
+    // ------------------------------------------------------------------ BIG DOOR
+
+    private void buildDoor() {
+        BlockState brick = Blocks.STONE_BRICKS.getDefaultState();
+        fill(-1, 1, -1, 7, 6, 1, AIR);
+        fill(0, 0, -1, 6, 0, 1, Blocks.POLISHED_ANDESITE.getDefaultState());
+        fill(0, 1, 0, 6, 5, 0, brick);
+
+        // дверь 3x3 в проёме
+        for (int x = 2; x <= 4; x++) {
+            for (int y = 1; y <= 3; y++) {
+                set(x, y, 0, ModBlocks.SECURITY_DOOR.getDefaultState().with(SecurityDoorBlock.FACING, Direction.NORTH));
+            }
+        }
+
+        // управление: зелёный считыватель слева, кодовые панели справа с обеих сторон
+        String code = randomCode();
+        reader(1, 2, 0, ModBlocks.READER_GREEN);
+        panel(5, 2, 0, Direction.NORTH, code);
+        panel(5, 3, 0, Direction.SOUTH, code);
+
+        chest(0, 1, -1, Direction.SOUTH,
+                new ItemStack(ModItems.KEYCARD_GREEN),
+                ModItems.codeNote(code, "Кодовая панель двери"));
+        lamp(3, 4, 0);
     }
 
     // ------------------------------------------------------------------ JEWELRY

@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "heistmod:block/escape_van"
+    },
+    "facing=east": {
+      "model": "heistmod:block/escape_van",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "heistmod:block/escape_van",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "heistmod:block/escape_van",
+      "y": 270
+    }
+  }
+}

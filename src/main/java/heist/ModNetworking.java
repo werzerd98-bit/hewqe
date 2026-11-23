@@ -32,6 +32,10 @@ public final class ModNetworking {
     private static void handleCode(ServerPlayerEntity player, BlockPos pos, String code) {
         ServerWorld world = player.getServerWorld();
         if (player.squaredDistanceTo(Vec3d.ofCenter(pos)) > 64.0) return;
+        if (world.getBlockEntity(pos) instanceof CodePanelBlockEntity panel) {
+            CodePanelBlock.tryUnlock(world, pos, player, panel, code);
+            return;
+        }
         if (!(world.getBlockEntity(pos) instanceof SafeBlockEntity safe)) return;
 
         if (!safe.isLocked()) {

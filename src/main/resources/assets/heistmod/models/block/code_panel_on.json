@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/orientable",
+  "textures": {
+    "top": "heistmod:block/panel_side",
+    "front": "heistmod:block/panel_front_on",
+    "side": "heistmod:block/panel_side"
+  }
+}
