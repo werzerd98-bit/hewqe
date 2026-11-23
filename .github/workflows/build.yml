@@ -28,5 +28,5 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           tag_name: latest
-          name: Heist Mod (latest build)
-          files: build/libs/heistmod-1.0.0.jar
+          name: Heist Mod
+          files: build/libs/heistmod-1.0.1.jar
