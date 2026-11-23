@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "heistmod:block/money_block"
+    }
+  }
+}

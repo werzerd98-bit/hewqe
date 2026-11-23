@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "heistmod:block/vault_door"
+    }
+  }
+}

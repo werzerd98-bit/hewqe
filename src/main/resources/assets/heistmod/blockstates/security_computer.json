@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "heistmod:block/security_computer"
+    },
+    "facing=east": {
+      "model": "heistmod:block/security_computer",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "heistmod:block/security_computer",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "heistmod:block/security_computer",
+      "y": 270
+    }
+  }
+}
