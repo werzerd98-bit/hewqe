@@ -35,11 +35,14 @@ public class HeistMod implements ModInitializer {
                         entries.add(ModBlocks.DISPLAY_CASE);
                         entries.add(ModBlocks.DISPLAY_CASE_FULL);
                         entries.add(ModBlocks.PAINTING);
+                        entries.add(ModBlocks.CASH_REGISTER);
                         entries.add(ModBlocks.MONEY_BLOCK);
                         entries.add(ModBlocks.GOLD_PILE);
                         entries.add(ModItems.GOLD_BAR);
                         entries.add(ModItems.CASH_BUNDLE);
                         entries.add(ModItems.JEWELRY);
+                        entries.add(LootBagItem.create(LootBagItem.KIND_MONEY, 4));
+                        entries.add(LootBagItem.create(LootBagItem.KIND_GOLD, 4));
                     })
                     .build());
 
@@ -51,6 +54,7 @@ public class HeistMod implements ModInitializer {
         ModNetworking.registerServer();
         DrillManager.init();
         CameraRegistry.init();
+        LootBags.init();
         HeistCommand.register();
     }
 }

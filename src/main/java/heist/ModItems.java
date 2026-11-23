@@ -18,6 +18,8 @@ public final class ModItems {
     public static final Item CASH_BUNDLE = reg("cash_bundle", new Item(new FabricItemSettings()));
     public static final Item JEWELRY = reg("jewelry", new Item(new FabricItemSettings().maxCount(16)));
 
+    public static final Item LOOT_BAG = reg("loot_bag", new LootBagItem(new FabricItemSettings().maxCount(1)));
+
     public static final Item CODE_NOTE = reg("code_note", new CodeNoteItem(new FabricItemSettings().maxCount(1)));
 
     private static Item reg(String name, Item item) {

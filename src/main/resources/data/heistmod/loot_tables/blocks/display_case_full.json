@@ -17,25 +17,6 @@
               }
             }
           ]
-        },
-        {
-          "type": "minecraft:item",
-          "name": "heistmod:gold_bar",
-          "weight": 2
-        },
-        {
-          "type": "minecraft:item",
-          "name": "heistmod:cash_bundle",
-          "weight": 2,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "min": 2,
-                "max": 6
-              }
-            }
-          ]
         }
       ]
     }

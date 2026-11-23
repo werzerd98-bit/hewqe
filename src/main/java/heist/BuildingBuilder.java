@@ -74,6 +74,10 @@ public final class BuildingBuilder {
         set(x, y, z, ModBlocks.PAINTING.getDefaultState().with(PaintingBlock.FACING, facing));
     }
 
+    private void cashRegister(int x, int y, int z, Direction facing) {
+        set(x, y, z, ModBlocks.CASH_REGISTER.getDefaultState().with(CashRegisterBlock.FACING, facing));
+    }
+
     private void camera(int x, int y, int z, Direction facing) {
         set(x, y, z, ModBlocks.CAMERA.getDefaultState().with(SecurityCameraBlock.FACING, facing));
     }
@@ -208,6 +212,12 @@ public final class BuildingBuilder {
         set(14, 1, 12, ModBlocks.MONEY_BLOCK.getDefaultState());
         chest(19, 1, 9, Direction.SOUTH, cash(64), cash(64), gold(8), new ItemStack(ModItems.JEWELRY, 6));
 
+        // Кассы за стойкой
+        cashRegister(5, 1, 4, Direction.NORTH);
+        cashRegister(8, 1, 4, Direction.NORTH);
+        cashRegister(12, 1, 4, Direction.NORTH);
+        cashRegister(15, 1, 4, Direction.NORTH);
+
         // Картины, камеры, компьютер охраны
         painting(4, 3, 7, Direction.NORTH);
         painting(16, 3, 7, Direction.NORTH);
@@ -283,6 +293,8 @@ public final class BuildingBuilder {
             s3.addLoot(new ItemStack(ModBlocks.PAINTING), r);
         }
 
+        cashRegister(4, 1, 6, Direction.NORTH);
+        cashRegister(8, 1, 6, Direction.NORTH);
         painting(3, 3, 7, Direction.NORTH);
         painting(9, 3, 7, Direction.NORTH);
         camera(6, 4, 1, Direction.SOUTH);

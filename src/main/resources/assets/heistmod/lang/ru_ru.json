@@ -7,6 +7,8 @@
   "block.heistmod.keycard_reader_blue": "Считыватель карт (синий)",
   "block.heistmod.keycard_reader_red": "Считыватель карт (красный)",
   "block.heistmod.display_case": "Витрина (пустая)",
+  "block.heistmod.cash_register": "Касса",
+  "item.heistmod.loot_bag": "Сумка с добычей",
   "block.heistmod.display_case_full": "Витрина с украшениями",
   "block.heistmod.drill": "Термобур",
   "block.heistmod.money_block": "Блок денег",

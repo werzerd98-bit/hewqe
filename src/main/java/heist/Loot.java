@@ -3,6 +3,9 @@ package heist;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.random.Random;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public final class Loot {
     private Loot() {}
 
@@ -15,6 +18,17 @@ public final class Loot {
         if (roll < 80) return new ItemStack(ModBlocks.PAINTING);
         if (roll < 90) return new ItemStack(ModBlocks.MONEY_BLOCK, 1 + r.nextInt(2));
         return new ItemStack(ModBlocks.GOLD_PILE);
+    }
+
+    /** Случайное содержимое кассы: в основном наличные, иногда золото, украшения или карта. */
+    public static List<ItemStack> cashRegister(Random r) {
+        List<ItemStack> out = new ArrayList<>();
+        out.add(new ItemStack(ModItems.CASH_BUNDLE, 3 + r.nextInt(8)));
+        if (r.nextInt(100) < 35) out.add(new ItemStack(ModItems.CASH_BUNDLE, 4 + r.nextInt(7)));
+        if (r.nextInt(100) < 15) out.add(new ItemStack(ModItems.GOLD_BAR, 1));
+        if (r.nextInt(100) < 12) out.add(new ItemStack(ModItems.JEWELRY, 1 + r.nextInt(2)));
+        if (r.nextInt(100) < 5) out.add(new ItemStack(ModItems.KEYCARD_GREEN));
+        return out;
     }
 
     /** Случайная строка из четырёх цифр. */

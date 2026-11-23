@@ -7,6 +7,8 @@
   "block.heistmod.keycard_reader_blue": "Keycard Reader (Blue)",
   "block.heistmod.keycard_reader_red": "Keycard Reader (Red)",
   "block.heistmod.display_case": "Display Case",
+  "block.heistmod.cash_register": "Cash Register",
+  "item.heistmod.loot_bag": "Loot Bag",
   "block.heistmod.display_case_full": "Full Display Case",
   "block.heistmod.drill": "Thermal Drill",
   "block.heistmod.money_block": "Block of Cash",
