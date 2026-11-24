@@ -1,11 +1,15 @@
 package heist;
 
+import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.PacketByteBuf;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.DirectionProperty;
@@ -21,15 +25,23 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 /**
- * Бур в виде блока. Ставится вплотную к сейфу или двери хранилища и сам начинает сверлить.
- * Если заклинило — ПКМ по буру. Сломал бур — бурение остановилось.
+ * Бур в виде блока: дрель или термобур (см. DrillType). Ставится вплотную к сейфу или двери
+ * хранилища и сам начинает сверлить. ПКМ открывает окно со временем до конца, кнопки
+ * «Запустить» и «Починить». Сломал бур — бурение остановилось.
  */
 public class DrillBlock extends Block {
     public static final DirectionProperty FACING = Properties.HORIZONTAL_FACING;
 
-    public DrillBlock(Settings settings) {
+    private final DrillType type;
+
+    public DrillBlock(Settings settings, DrillType type) {
         super(settings);
+        this.type = type;
         setDefaultState(getStateManager().getDefaultState().with(FACING, Direction.NORTH));
+    }
+
+    public DrillType getType() {
+        return type;
     }
 
     @Override
@@ -56,14 +68,22 @@ public class DrillBlock extends Block {
         return null;
     }
 
-    private static void tryStart(ServerWorld world, BlockPos target, BlockPos drill, @Nullable PlayerEntity player) {
+    private void startAt(ServerWorld world, BlockPos target, BlockPos drill, @Nullable PlayerEntity player) {
+        BlockState targetState = world.getBlockState(target);
+        if (targetState.getBlock() instanceof VaultDoorBlock && type.vaultTicks <= 0) {
+            if (player != null) {
+                player.sendMessage(Text.literal("Дрелью дверь хранилища не взять — нужен термобур.").formatted(Formatting.RED), true);
+            }
+            return;
+        }
         if (world.getBlockEntity(target) instanceof SafeBlockEntity safe && !safe.isLocked()) {
             if (player != null) player.sendMessage(Text.literal("Сейф уже открыт."), true);
             return;
         }
         DrillManager.start(world, target, drill);
         if (player != null) {
-            player.sendMessage(Text.literal("Бур запущен. Он может заклинить — тогда ПКМ по буру!").formatted(Formatting.YELLOW), true);
+            player.sendMessage(Text.literal("Бур запущен. Он может заклинить — тогда нажми «Починить» в окне бура.")
+                    .formatted(Formatting.YELLOW), true);
         }
     }
 
@@ -82,7 +102,7 @@ public class DrillBlock extends Block {
             return;
         }
         if (!DrillManager.isActive(sw, target)) {
-            tryStart(sw, target, pos, player);
+            startAt(sw, target, pos, player);
         }
     }
 
@@ -91,16 +111,28 @@ public class DrillBlock extends Block {
         if (world.isClient) return ActionResult.SUCCESS;
 
         ServerWorld sw = (ServerWorld) world;
+        ServerPlayerEntity sp = (ServerPlayerEntity) player;
+
+        PacketByteBuf buf = PacketByteBufs.create();
+        buf.writeBlockPos(pos);
+        ServerPlayNetworking.send(sp, ModNetworking.OPEN_DRILL, buf);
+        DrillManager.sendStatusFor(sw, sp, pos);
+        return ActionResult.CONSUME;
+    }
+
+    /** Действие из окна бура: 0 — запустить, 1 — починить. */
+    public static void handleAction(ServerWorld world, BlockPos pos, ServerPlayerEntity player, int action) {
+        BlockState state = world.getBlockState(pos);
+        if (!(state.getBlock() instanceof DrillBlock drill)) return;
+
         BlockPos target = findTarget(world, pos, state.get(FACING).getOpposite());
         if (target == null) {
             player.sendMessage(Text.literal("Рядом нет сейфа или двери хранилища."), true);
-        } else if (DrillManager.isJammed(sw, target)) {
-            DrillManager.fix(sw, target, player);
-        } else if (DrillManager.isActive(sw, target)) {
-            player.sendMessage(Text.literal("Бур работает..."), true);
-        } else {
-            tryStart(sw, target, pos, player);
+        } else if (action == 1) {
+            if (DrillManager.isJammed(world, target)) DrillManager.fix(world, target, player);
+        } else if (action == 0 && !DrillManager.isActive(world, target)) {
+            drill.startAt(world, target, pos, player);
         }
-        return ActionResult.CONSUME;
+        DrillManager.sendStatusFor(world, player, pos);
     }
 }

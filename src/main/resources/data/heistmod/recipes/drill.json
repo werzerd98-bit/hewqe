@@ -3,20 +3,21 @@
   "pattern": [
     "III",
     "IRI",
-    " D "
+    " S "
   ],
   "key": {
     "I": {
       "item": "minecraft:iron_ingot"
     },
     "R": {
-      "item": "minecraft:redstone_block"
+      "item": "minecraft:redstone"
     },
-    "D": {
-      "item": "minecraft:diamond"
+    "S": {
+      "item": "minecraft:stick"
     }
   },
   "result": {
-    "item": "heistmod:drill"
+    "item": "heistmod:drill",
+    "count": 1
   }
 }

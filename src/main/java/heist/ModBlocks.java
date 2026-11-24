@@ -14,10 +14,20 @@ public final class ModBlocks {
     private ModBlocks() {}
 
     public static final Block DRILL = register("drill",
-            new DrillBlock(FabricBlockSettings.create().strength(2.0f).sounds(BlockSoundGroup.METAL)));
+            new DrillBlock(FabricBlockSettings.create().strength(2.0f).sounds(BlockSoundGroup.METAL), DrillType.DRILL));
+
+    public static final Block THERMAL_DRILL = register("thermal_drill",
+            new DrillBlock(FabricBlockSettings.create().strength(2.0f).sounds(BlockSoundGroup.METAL), DrillType.THERMAL));
 
     public static final Block SAFE = register("safe",
             new SafeBlock(FabricBlockSettings.create().strength(-1.0f, 3600000.0f).sounds(BlockSoundGroup.METAL)));
+
+    /** Сейфы с добычей: открываются только сверлением. */
+    public static final Block SAFE_GOLD = register("safe_gold",
+            new LootSafeBlock(FabricBlockSettings.create().strength(-1.0f, 3600000.0f).nonOpaque().sounds(BlockSoundGroup.METAL), LootBagItem.KIND_GOLD));
+
+    public static final Block SAFE_MONEY = register("safe_money",
+            new LootSafeBlock(FabricBlockSettings.create().strength(-1.0f, 3600000.0f).nonOpaque().sounds(BlockSoundGroup.METAL), LootBagItem.KIND_MONEY));
 
     public static final Block VAULT_DOOR = register("vault_door",
             new VaultDoorBlock(FabricBlockSettings.create().strength(-1.0f, 3600000.0f).sounds(BlockSoundGroup.METAL)));

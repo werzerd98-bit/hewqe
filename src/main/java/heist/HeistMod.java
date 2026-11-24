@@ -22,10 +22,13 @@ public class HeistMod implements ModInitializer {
                     .icon(() -> new ItemStack(ModBlocks.DRILL))
                     .entries((ctx, entries) -> {
                         entries.add(ModBlocks.DRILL);
+                        entries.add(ModBlocks.THERMAL_DRILL);
                         entries.add(ModItems.KEYCARD_GREEN);
                         entries.add(ModItems.KEYCARD_BLUE);
                         entries.add(ModItems.KEYCARD_RED);
                         entries.add(ModBlocks.SAFE);
+                        entries.add(ModBlocks.SAFE_GOLD);
+                        entries.add(ModBlocks.SAFE_MONEY);
                         entries.add(ModBlocks.VAULT_DOOR);
                         entries.add(ModBlocks.READER_GREEN);
                         entries.add(ModBlocks.READER_BLUE);

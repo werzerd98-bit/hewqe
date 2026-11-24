@@ -18,10 +18,25 @@ public final class ModNetworking {
     public static final Identifier OPEN_KEYPAD = HeistMod.id("open_keypad");
     /** Сервер -> клиент: список камер (VarInt n, затем n раз BlockPos + float yaw). */
     public static final Identifier OPEN_COMPUTER = HeistMod.id("open_computer");
+    /** Сервер -> клиент: открыть окно бура (BlockPos). */
+    public static final Identifier OPEN_DRILL = HeistMod.id("open_drill");
+    /** Сервер -> клиент: состояние бура (BlockPos, byte state, int left, int total). */
+    public static final Identifier DRILL_STATUS = HeistMod.id("drill_status");
+    /** Клиент -> сервер: действие в окне бура (BlockPos, byte: 0 запустить, 1 починить). */
+    public static final Identifier DRILL_ACTION = HeistMod.id("drill_action");
     /** Клиент -> сервер: отправить введённый код (BlockPos, String). */
     public static final Identifier SUBMIT_CODE = HeistMod.id("submit_code");
 
     public static void registerServer() {
+        ServerPlayNetworking.registerGlobalReceiver(DRILL_ACTION, (server, player, handler, buf, responseSender) -> {
+            BlockPos pos = buf.readBlockPos();
+            int action = buf.readByte();
+            server.execute(() -> {
+                if (player.squaredDistanceTo(Vec3d.ofCenter(pos)) > 100.0) return;
+                DrillBlock.handleAction(player.getServerWorld(), pos, player, action);
+            });
+        });
+
         ServerPlayNetworking.registerGlobalReceiver(SUBMIT_CODE, (server, player, handler, buf, responseSender) -> {
             BlockPos pos = buf.readBlockPos();
             String code = buf.readString(8);

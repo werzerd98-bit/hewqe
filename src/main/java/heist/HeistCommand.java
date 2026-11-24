@@ -52,13 +52,14 @@ public final class HeistCommand {
     private static int kit(ServerCommandSource src) throws CommandSyntaxException {
         ServerPlayerEntity player = src.getPlayerOrThrow();
         player.giveItemStack(new ItemStack(ModBlocks.DRILL));
+        player.giveItemStack(new ItemStack(ModBlocks.THERMAL_DRILL));
         player.giveItemStack(new ItemStack(ModBlocks.CAMERA, 2));
         player.giveItemStack(new ItemStack(ModBlocks.COMPUTER));
         player.giveItemStack(new ItemStack(ModBlocks.PAINTING, 2));
         player.giveItemStack(new ItemStack(ModItems.KEYCARD_GREEN));
         player.giveItemStack(new ItemStack(ModItems.KEYCARD_BLUE));
         player.giveItemStack(new ItemStack(ModItems.KEYCARD_RED));
-        src.sendFeedback(() -> Text.literal("Выдан набор: бур, камеры, компьютер, картины и три ключ-карты."), false);
+        src.sendFeedback(() -> Text.literal("Выдан набор: дрель, термобур, камеры, компьютер, картины и три ключ-карты."), false);
         return 1;
     }
 

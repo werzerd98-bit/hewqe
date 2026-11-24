@@ -33,6 +33,22 @@ public class HeistClient implements ClientModInitializer {
             client.execute(() -> client.setScreen(new KeypadScreen(pos)));
         });
 
+        ClientPlayNetworking.registerGlobalReceiver(ModNetworking.OPEN_DRILL, (client, handler, buf, responseSender) -> {
+            BlockPos pos = buf.readBlockPos();
+            client.execute(() -> client.setScreen(new DrillScreen(pos)));
+        });
+
+        ClientPlayNetworking.registerGlobalReceiver(ModNetworking.DRILL_STATUS, (client, handler, buf, responseSender) -> {
+            BlockPos pos = buf.readBlockPos();
+            int state = buf.readByte();
+            int left = buf.readInt();
+            int total = buf.readInt();
+            client.execute(() -> {
+                long now = client.world == null ? 0L : client.world.getTime();
+                DrillClient.set(pos, state, left, total, now);
+            });
+        });
+
         ClientPlayNetworking.registerGlobalReceiver(ModNetworking.OPEN_COMPUTER, (client, handler, buf, responseSender) -> {
             int n = buf.readVarInt();
             List<CamInfo> cams = new ArrayList<>();

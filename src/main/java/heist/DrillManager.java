@@ -2,7 +2,10 @@ package heist;
 
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
+import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.block.BlockState;
+import net.minecraft.network.PacketByteBuf;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.registry.RegistryKey;
@@ -31,15 +34,14 @@ public final class DrillManager {
         boolean jammed = false;
 
         final BlockPos drill;
+        final int jamOdds;
 
-        Session(int total, BlockPos drill) {
+        Session(int total, BlockPos drill, int jamOdds) {
             this.total = total;
             this.drill = drill;
+            this.jamOdds = jamOdds;
         }
     }
-
-    private static final int SAFE_TICKS = 20 * 20;   // 20 секунд
-    private static final int VAULT_TICKS = 20 * 60;  // 60 секунд
 
     private static final Map<Key, Session> SESSIONS = new HashMap<>();
 
@@ -49,6 +51,7 @@ public final class DrillManager {
     }
 
     public static boolean isDrillable(BlockState state) {
+        if (state.getBlock() instanceof LootSafeBlock) return !state.get(LootSafeBlock.OPEN);
         return state.getBlock() instanceof SafeBlock || state.getBlock() instanceof VaultDoorBlock;
     }
 
@@ -70,7 +73,8 @@ public final class DrillManager {
         if (s == null) return;
         s.jammed = false;
         world.playSound(null, pos, SoundEvents.BLOCK_ANVIL_USE, SoundCategory.BLOCKS, 0.7f, 1.5f);
-        player.sendMessage(Text.literal("Дрель починена!").formatted(Formatting.GREEN), true);
+        player.sendMessage(Text.literal("Бур починен!").formatted(Formatting.GREEN), true);
+        if (s.drill != null) broadcastStatus(world, s.drill, 1, s.total - s.ticks, s.total);
     }
 
     public static void start(ServerWorld world, BlockPos pos) {
@@ -80,11 +84,47 @@ public final class DrillManager {
     public static void start(ServerWorld world, BlockPos pos, BlockPos drill) {
         BlockState state = world.getBlockState(pos);
         boolean vault = state.getBlock() instanceof VaultDoorBlock;
-        SESSIONS.put(key(world, pos), new Session(vault ? VAULT_TICKS : SAFE_TICKS, drill == null ? null : drill.toImmutable()));
+        DrillType type = drill != null && world.getBlockState(drill).getBlock() instanceof DrillBlock db
+                ? db.getType() : DrillType.THERMAL;
+        double factor = state.getBlock() instanceof LootSafeBlock ls ? ls.drillFactor() : 1.0;
+        int total = (int) ((vault ? type.vaultTicks : type.safeTicks) * factor);
+        Session session = new Session(Math.max(total, 20), drill == null ? null : drill.toImmutable(), type.jamOdds);
+        SESSIONS.put(key(world, pos), session);
+        if (drill != null) broadcastStatus(world, drill, 1, session.total, session.total);
         world.playSound(null, pos, SoundEvents.BLOCK_ANVIL_PLACE, SoundCategory.BLOCKS, 1.0f, 0.8f);
         if (vault) {
             alarm(world, pos);
         }
+    }
+
+    /** Состояние для окна бура: 0 — не работает, 1 — работает, 2 — заклинило, 3 — готово. */
+    public static void sendStatus(ServerPlayerEntity player, BlockPos drill, int state, int left, int total) {
+        PacketByteBuf buf = PacketByteBufs.create();
+        buf.writeBlockPos(drill);
+        buf.writeByte(state);
+        buf.writeInt(left);
+        buf.writeInt(total);
+        ServerPlayNetworking.send(player, ModNetworking.DRILL_STATUS, buf);
+    }
+
+    private static void broadcastStatus(ServerWorld world, BlockPos drill, int state, int left, int total) {
+        for (ServerPlayerEntity p : world.getPlayers()) {
+            if (p.squaredDistanceTo(drill.getX() + 0.5, drill.getY() + 0.5, drill.getZ() + 0.5) < 12 * 12) {
+                sendStatus(p, drill, state, Math.max(left, 0), total);
+            }
+        }
+    }
+
+    /** Отправляет игроку текущее состояние конкретного бура (когда он открывает окно). */
+    public static void sendStatusFor(ServerWorld world, ServerPlayerEntity player, BlockPos drill) {
+        for (Map.Entry<Key, Session> e : SESSIONS.entrySet()) {
+            Session s = e.getValue();
+            if (e.getKey().dim().equals(world.getRegistryKey()) && drill.equals(s.drill)) {
+                sendStatus(player, drill, s.jammed ? 2 : 1, Math.max(s.total - s.ticks, 0), s.total);
+                return;
+            }
+        }
+        sendStatus(player, drill, 0, 0, 0);
     }
 
     private static void alarm(ServerWorld world, BlockPos pos) {
@@ -134,7 +174,7 @@ public final class DrillManager {
                 continue;
             }
 
-            if (s.ticks > 40 && world.getRandom().nextInt(1500) == 0) {
+            if (s.ticks > 40 && world.getRandom().nextInt(s.jamOdds) == 0) {
                 s.jammed = true;
                 world.playSound(null, pos, SoundEvents.BLOCK_ANVIL_LAND, SoundCategory.BLOCKS, 0.8f, 0.6f);
                 continue;
@@ -155,12 +195,14 @@ public final class DrillManager {
 
             if (s.ticks >= s.total) {
                 finish(world, pos, state);
+                if (s.drill != null) broadcastStatus(world, s.drill, 3, 0, s.total);
                 it.remove();
             }
         }
     }
 
     private static void sendProgress(ServerWorld world, BlockPos pos, Session s) {
+        if (s.drill != null) broadcastStatus(world, s.drill, s.jammed ? 2 : 1, s.total - s.ticks, s.total);
         int pct = Math.min(100, s.ticks * 100 / s.total);
         Text text = s.jammed
                 ? Text.literal("Бурение " + pct + "% — ЗАКЛИНИЛО! Нажми ПКМ чтобы починить").formatted(Formatting.RED)
@@ -173,7 +215,9 @@ public final class DrillManager {
     }
 
     private static void finish(ServerWorld world, BlockPos pos, BlockState state) {
-        if (state.getBlock() instanceof SafeBlock) {
+        if (state.getBlock() instanceof LootSafeBlock) {
+            LootSafeBlock.open(world, pos, state);
+        } else if (state.getBlock() instanceof SafeBlock) {
             if (world.getBlockEntity(pos) instanceof SafeBlockEntity safe) {
                 safe.setLocked(false);
             }

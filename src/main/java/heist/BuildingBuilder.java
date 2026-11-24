@@ -89,6 +89,11 @@ public final class BuildingBuilder {
         }
     }
 
+    private void lootSafe(int x, int y, int z, Direction face, boolean gold) {
+        set(x, y, z, (gold ? ModBlocks.SAFE_GOLD : ModBlocks.SAFE_MONEY).getDefaultState()
+                .with(LootSafeBlock.FACING, face));
+    }
+
     private void camera(int x, int y, int z, Direction facing) {
         set(x, y, z, ModBlocks.CAMERA.getDefaultState().with(SecurityCameraBlock.FACING, facing));
     }
@@ -209,13 +214,13 @@ public final class BuildingBuilder {
         addTo(safeB, new ItemStack(ModItems.KEYCARD_RED), gold(2), new ItemStack(ModBlocks.PAINTING));
 
         // Хранилище: три сейфа с неизвестными кодами (нужна дрель), золото, деньги
-        for (int x : new int[]{15, 17, 19}) {
-            SafeBlockEntity s = safe(x, 1, 13, Direction.NORTH, randomCode());
-            if (s != null) {
-                s.fillRandom(5, r);
-                s.addLoot(gold(3), r);
-            }
+        lootSafe(15, 1, 13, Direction.NORTH, false);
+        SafeBlockEntity vaultSafe = safe(17, 1, 13, Direction.NORTH, randomCode());
+        if (vaultSafe != null) {
+            vaultSafe.fillRandom(5, r);
+            vaultSafe.addLoot(gold(3), r);
         }
+        lootSafe(19, 1, 13, Direction.NORTH, true);
         fill(18, 1, 10, 19, 1, 11, ModBlocks.GOLD_PILE.getDefaultState());
         set(19, 2, 10, ModBlocks.GOLD_PILE.getDefaultState());
         fill(14, 1, 10, 14, 2, 10, ModBlocks.MONEY_BLOCK.getDefaultState());
@@ -320,16 +325,8 @@ public final class BuildingBuilder {
         // Сейфы
         SafeBlockEntity s1 = safe(2, 1, 11, Direction.NORTH, codeS1);
         addTo(s1, new ItemStack(ModItems.JEWELRY, 4), gold(2), cash(8));
-        SafeBlockEntity s2 = safe(5, 1, 11, Direction.NORTH, randomCode());
-        if (s2 != null) {
-            s2.fillRandom(6, r);
-            s2.addLoot(gold(4), r);
-        }
-        SafeBlockEntity s3 = safe(9, 1, 11, Direction.NORTH, randomCode());
-        if (s3 != null) {
-            s3.fillRandom(6, r);
-            s3.addLoot(new ItemStack(ModBlocks.PAINTING), r);
-        }
+        lootSafe(5, 1, 11, Direction.NORTH, true);
+        lootSafe(9, 1, 11, Direction.NORTH, false);
 
         cashRegister(4, 1, 6, Direction.NORTH);
         cashRegister(8, 1, 6, Direction.NORTH);

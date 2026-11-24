@@ -8,7 +8,9 @@
     "heistmod:security_camera",
     "heistmod:security_computer",
     "heistmod:gold_pile",
+    "heistmod:thermal_drill",
     "heistmod:code_panel",
-    "heistmod:escape_van"
+    "heistmod:escape_van",
+    "heistmod:cash_register"
   ]
 }
