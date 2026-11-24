@@ -91,8 +91,19 @@ public final class BuildingBuilder {
         set(x, y + 1, z, base.with(Properties.DOUBLE_BLOCK_HALF, DoubleBlockHalf.UPPER));
     }
 
-    private void reader(int x, int y, int z, Block readerBlock) {
-        set(x, y, z, readerBlock.getDefaultState());
+    /** Стена остаётся целой, считыватель вешается на неё с обеих сторон (front и противоположной). */
+    private void reader(int x, int y, int z, Direction front) {
+        BlockPos wall = o.add(x, y, z);
+        if (!w.getBlockState(wall).isOpaqueFullCube(w, wall)) {
+            set(x, y, z, Blocks.STONE_BRICKS.getDefaultState());
+        }
+        for (Direction d : new Direction[]{front, front.getOpposite()}) {
+            BlockPos p = wall.offset(d);
+            if (w.getBlockState(p).isAir()) {
+                w.setBlockState(p, ModBlocks.READER.getDefaultState().with(KeycardReaderBlock.FACING, d),
+                        Block.NOTIFY_LISTENERS | Block.FORCE_STATE);
+            }
+        }
     }
 
     private void vaultDoor(int x, int z) {
@@ -212,18 +223,18 @@ public final class BuildingBuilder {
 
         // 1) Зал: дверь в служебную зону — зелёная карта
         ironDoor(10, 1, 8, Direction.NORTH);
-        reader(9, 1, 8, ModBlocks.READER_GREEN);
-        reader(11, 1, 8, ModBlocks.READER_GREEN);
+        reader(9, 1, 8, Direction.NORTH);
+        reader(11, 1, 8, Direction.NORTH);
 
         // 2) Кабинет менеджера — синяя карта
         ironDoor(6, 1, 11, Direction.EAST);
-        reader(6, 1, 10, ModBlocks.READER_BLUE);
-        reader(6, 1, 12, ModBlocks.READER_BLUE);
+        reader(6, 1, 10, Direction.EAST);
+        reader(6, 1, 12, Direction.EAST);
 
         // 3) Дверь хранилища — красная карта (или дрель в стене из зала)
         ironDoor(13, 1, 11, Direction.EAST);
-        reader(13, 1, 10, ModBlocks.READER_RED);
-        reader(13, 1, 12, ModBlocks.READER_RED);
+        reader(13, 1, 10, Direction.EAST);
+        reader(13, 1, 12, Direction.EAST);
         vaultDoor(16, 8);
 
         // Сундук кассира: зелёная карта + записка с кодом сейфа персонала
@@ -303,7 +314,7 @@ public final class BuildingBuilder {
 
         // управление: зелёный считыватель слева, кодовые панели справа с обеих сторон
         String code = randomCode();
-        reader(1, 2, 0, ModBlocks.READER_GREEN);
+        reader(1, 2, 0, Direction.NORTH);
         panel(5, 2, 0, Direction.NORTH, code);
         panel(5, 3, 0, Direction.SOUTH, code);
 
@@ -336,8 +347,8 @@ public final class BuildingBuilder {
         fill(1, 1, 8, 11, 4, 8, wall);
         String codeS1 = randomCode();
         ironDoor(6, 1, 8, Direction.NORTH);
-        reader(5, 1, 8, ModBlocks.READER_GREEN);
-        reader(7, 1, 8, ModBlocks.READER_GREEN);
+        reader(5, 1, 8, Direction.NORTH);
+        reader(7, 1, 8, Direction.NORTH);
         vaultDoor(10, 8);
 
         // Витрины с украшениями: разбил — получил добычу

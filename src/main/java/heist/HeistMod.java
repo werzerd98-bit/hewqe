@@ -28,9 +28,7 @@ public class HeistMod implements ModInitializer {
                         entries.add(ModBlocks.SAFE_GOLD);
                         entries.add(ModBlocks.SAFE_MONEY);
                         entries.add(ModBlocks.VAULT_DOOR);
-                        entries.add(ModBlocks.READER_GREEN);
-                        entries.add(ModBlocks.READER_BLUE);
-                        entries.add(ModBlocks.READER_RED);
+                        entries.add(ModBlocks.READER);
                         entries.add(ModBlocks.SECURITY_DOOR);
                         entries.add(ModBlocks.CODE_PANEL);
                         entries.add(ModItems.LOCKPICK);

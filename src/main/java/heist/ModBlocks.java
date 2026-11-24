@@ -32,14 +32,9 @@ public final class ModBlocks {
     public static final Block VAULT_DOOR = register("vault_door",
             new VaultDoorBlock(FabricBlockSettings.create().strength(-1.0f, 3600000.0f).sounds(BlockSoundGroup.METAL)));
 
-    public static final Block READER_GREEN = register("keycard_reader_green",
-            new KeycardReaderBlock(FabricBlockSettings.create().strength(3.0f, 6.0f).sounds(BlockSoundGroup.METAL), 1));
-
-    public static final Block READER_BLUE = register("keycard_reader_blue",
-            new KeycardReaderBlock(FabricBlockSettings.create().strength(3.0f, 6.0f).sounds(BlockSoundGroup.METAL), 2));
-
-    public static final Block READER_RED = register("keycard_reader_red",
-            new KeycardReaderBlock(FabricBlockSettings.create().strength(3.0f, 6.0f).sounds(BlockSoundGroup.METAL), 3));
+    /** Единственный считыватель ключ-карт: небольшая панель на стене. */
+    public static final Block READER = register("keycard_reader",
+            new KeycardReaderBlock(FabricBlockSettings.create().strength(3.0f, 6.0f).nonOpaque().noCollision().sounds(BlockSoundGroup.METAL)));
 
     /** Пустая витрина: просто стекло. */
     public static final Block DISPLAY_CASE = register("display_case",

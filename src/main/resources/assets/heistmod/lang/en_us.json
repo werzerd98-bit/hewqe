@@ -3,9 +3,6 @@
   "screen.heistmod.keypad": "Enter safe code",
   "block.heistmod.safe": "Safe",
   "block.heistmod.vault_door": "Vault Door",
-  "block.heistmod.keycard_reader_green": "Keycard Reader (Green)",
-  "block.heistmod.keycard_reader_blue": "Keycard Reader (Blue)",
-  "block.heistmod.keycard_reader_red": "Keycard Reader (Red)",
   "block.heistmod.display_case": "Display Case",
   "block.heistmod.thermal_drill": "Thermal Drill",
   "block.heistmod.safe_gold": "Gold Safe",
@@ -41,5 +38,6 @@
   "block.heistmod.door_breach_steel": "Reinforced Door (needs C4)",
   "block.heistmod.c4": "C4 Charge (game-style)",
   "screen.heistmod.lockpick": "Lockpicking",
-  "item.heistmod.keycard": "Keycard"
+  "item.heistmod.keycard": "Keycard",
+  "block.heistmod.keycard_reader": "Keycard Reader"
 }

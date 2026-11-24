@@ -3,9 +3,6 @@
   "screen.heistmod.keypad": "Введите код сейфа",
   "block.heistmod.safe": "Сейф",
   "block.heistmod.vault_door": "Дверь хранилища",
-  "block.heistmod.keycard_reader_green": "Считыватель карт (зелёный)",
-  "block.heistmod.keycard_reader_blue": "Считыватель карт (синий)",
-  "block.heistmod.keycard_reader_red": "Считыватель карт (красный)",
   "block.heistmod.display_case": "Витрина (пустая)",
   "block.heistmod.thermal_drill": "Термобур",
   "block.heistmod.safe_gold": "Сейф с золотом",
@@ -41,5 +38,6 @@
   "block.heistmod.door_breach_steel": "Укреплённая дверь (под взрывчатку)",
   "block.heistmod.c4": "Взрывчатка C4 (игровая)",
   "screen.heistmod.lockpick": "Взлом замка",
-  "item.heistmod.keycard": "Ключ-карта"
+  "item.heistmod.keycard": "Ключ-карта",
+  "block.heistmod.keycard_reader": "Считыватель карт"
 }

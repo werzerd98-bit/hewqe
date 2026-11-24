@@ -2,9 +2,6 @@
   "replace": false,
   "values": [
     "heistmod:drill",
-    "heistmod:keycard_reader_green",
-    "heistmod:keycard_reader_blue",
-    "heistmod:keycard_reader_red",
     "heistmod:security_camera",
     "heistmod:security_computer",
     "heistmod:gold_pile",
@@ -12,6 +9,7 @@
     "heistmod:code_panel",
     "heistmod:escape_van",
     "heistmod:cash_register",
-    "heistmod:c4"
+    "heistmod:c4",
+    "heistmod:keycard_reader"
   ]
 }
