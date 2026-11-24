@@ -23,9 +23,7 @@ public class HeistMod implements ModInitializer {
                     .entries((ctx, entries) -> {
                         entries.add(ModBlocks.DRILL);
                         entries.add(ModBlocks.THERMAL_DRILL);
-                        entries.add(ModItems.KEYCARD_GREEN);
-                        entries.add(ModItems.KEYCARD_BLUE);
-                        entries.add(ModItems.KEYCARD_RED);
+                        entries.add(ModItems.KEYCARD);
                         entries.add(ModBlocks.SAFE);
                         entries.add(ModBlocks.SAFE_GOLD);
                         entries.add(ModBlocks.SAFE_MONEY);

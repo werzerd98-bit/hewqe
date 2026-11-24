@@ -16,6 +16,7 @@
     }
   },
   "result": {
-    "item": "heistmod:keycard_green"
+    "item": "heistmod:keycard",
+    "count": 1
   }
 }

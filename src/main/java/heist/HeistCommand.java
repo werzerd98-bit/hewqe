@@ -59,10 +59,8 @@ public final class HeistCommand {
         player.giveItemStack(new ItemStack(ModBlocks.PAINTING, 2));
         player.giveItemStack(new ItemStack(ModItems.LOCKPICK, 4));
         player.giveItemStack(new ItemStack(ModBlocks.C4, 4));
-        player.giveItemStack(new ItemStack(ModItems.KEYCARD_GREEN));
-        player.giveItemStack(new ItemStack(ModItems.KEYCARD_BLUE));
-        player.giveItemStack(new ItemStack(ModItems.KEYCARD_RED));
-        src.sendFeedback(() -> Text.literal("Выдан набор: дрель, термобур, камеры, компьютер, картины и три ключ-карты."), false);
+        player.giveItemStack(new ItemStack(ModItems.KEYCARD));
+        src.sendFeedback(() -> Text.literal("Выдан набор: дрель, термобур, камеры, компьютер, картины и ключ-карту."), false);
         return 1;
     }
 

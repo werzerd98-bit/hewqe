@@ -10,9 +10,8 @@ import net.minecraft.registry.Registry;
 public final class ModItems {
     private ModItems() {}
 
-    public static final Item KEYCARD_GREEN = reg("keycard_green", new KeycardItem(new FabricItemSettings().maxCount(1), 1));
-    public static final Item KEYCARD_BLUE = reg("keycard_blue", new KeycardItem(new FabricItemSettings().maxCount(1), 2));
-    public static final Item KEYCARD_RED = reg("keycard_red", new KeycardItem(new FabricItemSettings().maxCount(1), 3));
+    /** Единая ключ-карта: открывает любой считыватель. */
+    public static final Item KEYCARD = reg("keycard", new KeycardItem(new FabricItemSettings().maxCount(1)));
 
     public static final Item GOLD_BAR = reg("gold_bar", new Item(new FabricItemSettings().maxCount(16)));
     public static final Item CASH_BUNDLE = reg("cash_bundle", new Item(new FabricItemSettings()));

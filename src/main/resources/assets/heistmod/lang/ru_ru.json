@@ -28,9 +28,6 @@
   "key.heistmod.next_camera": "Следующая камера",
   "key.categories.heistmod": "Heist Mod",
   "item.heistmod.drill": "Термобур",
-  "item.heistmod.keycard_green": "Зелёная ключ-карта",
-  "item.heistmod.keycard_blue": "Синяя ключ-карта",
-  "item.heistmod.keycard_red": "Красная ключ-карта",
   "item.heistmod.gold_bar": "Золотой слиток",
   "item.heistmod.cash_bundle": "Пачка денег",
   "item.heistmod.jewelry": "Украшения",
@@ -43,5 +40,6 @@
   "block.heistmod.door_breach_wood": "Хлипкая дверь (под взрывчатку)",
   "block.heistmod.door_breach_steel": "Укреплённая дверь (под взрывчатку)",
   "block.heistmod.c4": "Взрывчатка C4 (игровая)",
-  "screen.heistmod.lockpick": "Взлом замка"
+  "screen.heistmod.lockpick": "Взлом замка",
+  "item.heistmod.keycard": "Ключ-карта"
 }

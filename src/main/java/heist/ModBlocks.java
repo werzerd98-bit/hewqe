@@ -14,10 +14,10 @@ public final class ModBlocks {
     private ModBlocks() {}
 
     public static final Block DRILL = register("drill",
-            new DrillBlock(FabricBlockSettings.create().strength(2.0f).sounds(BlockSoundGroup.METAL), DrillType.DRILL));
+            new DrillBlock(FabricBlockSettings.create().strength(2.0f).nonOpaque().sounds(BlockSoundGroup.METAL), DrillType.DRILL));
 
     public static final Block THERMAL_DRILL = register("thermal_drill",
-            new DrillBlock(FabricBlockSettings.create().strength(2.0f).sounds(BlockSoundGroup.METAL), DrillType.THERMAL));
+            new DrillBlock(FabricBlockSettings.create().strength(2.0f).nonOpaque().sounds(BlockSoundGroup.METAL), DrillType.THERMAL));
 
     public static final Block SAFE = register("safe",
             new SafeBlock(FabricBlockSettings.create().strength(-1.0f, 3600000.0f).sounds(BlockSoundGroup.METAL)));
@@ -50,10 +50,10 @@ public final class ModBlocks {
             new GlassBlock(FabricBlockSettings.create().strength(0.4f).nonOpaque().sounds(BlockSoundGroup.GLASS)));
 
     public static final Block MONEY_BLOCK = register("money_block",
-            new LootBlock(FabricBlockSettings.create().strength(1.0f).sounds(BlockSoundGroup.WOOL), LootBagItem.KIND_MONEY));
+            new LootBlock(FabricBlockSettings.create().strength(1.0f).nonOpaque().sounds(BlockSoundGroup.WOOL), LootBagItem.KIND_MONEY));
 
     public static final Block GOLD_PILE = register("gold_pile",
-            new LootBlock(FabricBlockSettings.create().strength(2.0f, 6.0f).sounds(BlockSoundGroup.METAL), LootBagItem.KIND_GOLD));
+            new LootBlock(FabricBlockSettings.create().strength(2.0f, 6.0f).nonOpaque().sounds(BlockSoundGroup.METAL), LootBagItem.KIND_GOLD));
 
     public static final Block PAINTING = register("painting",
             new PaintingBlock(FabricBlockSettings.create().strength(0.5f).nonOpaque().noCollision().sounds(BlockSoundGroup.WOOD)),
@@ -63,7 +63,7 @@ public final class ModBlocks {
             new SecurityCameraBlock(FabricBlockSettings.create().strength(2.0f).nonOpaque().sounds(BlockSoundGroup.METAL)));
 
     public static final Block COMPUTER = register("security_computer",
-            new SecurityComputerBlock(FabricBlockSettings.create().strength(3.0f).sounds(BlockSoundGroup.METAL)));
+            new SecurityComputerBlock(FabricBlockSettings.create().strength(3.0f).nonOpaque().sounds(BlockSoundGroup.METAL)));
 
     public static final Block CASH_REGISTER = register("cash_register",
             new CashRegisterBlock(FabricBlockSettings.create().strength(3.0f).sounds(BlockSoundGroup.METAL)));
@@ -73,7 +73,7 @@ public final class ModBlocks {
             new SecurityDoorBlock(FabricBlockSettings.create().strength(-1.0f, 3600000.0f).nonOpaque().sounds(BlockSoundGroup.METAL)));
 
     public static final Block CODE_PANEL = register("code_panel",
-            new CodePanelBlock(FabricBlockSettings.create().strength(3.0f, 6.0f).sounds(BlockSoundGroup.METAL)));
+            new CodePanelBlock(FabricBlockSettings.create().strength(3.0f, 6.0f).nonOpaque().sounds(BlockSoundGroup.METAL)));
 
     public static final Block ESCAPE_VAN = register("escape_van",
             new EscapeVanBlock(FabricBlockSettings.create().strength(5.0f, 6.0f).nonOpaque().sounds(BlockSoundGroup.METAL)));

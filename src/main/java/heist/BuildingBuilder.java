@@ -228,20 +228,20 @@ public final class BuildingBuilder {
 
         // Сундук кассира: зелёная карта + записка с кодом сейфа персонала
         chest(3, 1, 5, Direction.SOUTH,
-                new ItemStack(ModItems.KEYCARD_GREEN),
+                new ItemStack(ModItems.KEYCARD),
                 ModItems.codeNote(codeA, "Сейф персонала"),
                 cash(8));
 
-        // Сейф персонала: синяя карта
+        // Сейф персонала
         SafeBlockEntity safeA = safe(8, 1, 12, Direction.NORTH, codeA);
-        addTo(safeA, new ItemStack(ModItems.KEYCARD_BLUE), cash(10));
+        addTo(safeA, cash(10));
 
-        // Кабинет менеджера: сундук с запиской и сейф с красной картой
+        // Кабинет менеджера: сундук с запиской и сейф с золотом
         chest(4, 1, 10, Direction.SOUTH,
                 ModItems.codeNote(codeB, "Сейф менеджера"),
                 cash(6));
         SafeBlockEntity safeB = safe(2, 1, 12, Direction.NORTH, codeB);
-        addTo(safeB, new ItemStack(ModItems.KEYCARD_RED), gold(2), new ItemStack(ModBlocks.PAINTING));
+        addTo(safeB, gold(2), new ItemStack(ModBlocks.PAINTING));
 
         // Хранилище: три сейфа с неизвестными кодами (нужна дрель), золото, деньги
         lootSafe(15, 1, 13, Direction.NORTH, false);
@@ -308,7 +308,7 @@ public final class BuildingBuilder {
         panel(5, 3, 0, Direction.SOUTH, code);
 
         chest(0, 1, -1, Direction.SOUTH,
-                new ItemStack(ModItems.KEYCARD_GREEN),
+                new ItemStack(ModItems.KEYCARD),
                 ModItems.codeNote(code, "Кодовая панель двери"));
         lamp(3, 4, 0);
     }
@@ -348,7 +348,7 @@ public final class BuildingBuilder {
 
         // Касса: зелёная карта + записка с кодом
         chest(6, 1, 6, Direction.SOUTH,
-                new ItemStack(ModItems.KEYCARD_GREEN),
+                new ItemStack(ModItems.KEYCARD),
                 ModItems.codeNote(codeS1, "Сейф в подсобке"),
                 cash(10));
 

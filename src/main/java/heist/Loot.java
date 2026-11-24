@@ -27,7 +27,7 @@ public final class Loot {
         if (r.nextInt(100) < 35) out.add(new ItemStack(ModItems.CASH_BUNDLE, 4 + r.nextInt(7)));
         if (r.nextInt(100) < 15) out.add(new ItemStack(ModItems.GOLD_BAR, 1));
         if (r.nextInt(100) < 12) out.add(new ItemStack(ModItems.JEWELRY, 1 + r.nextInt(2)));
-        if (r.nextInt(100) < 5) out.add(new ItemStack(ModItems.KEYCARD_GREEN));
+        if (r.nextInt(100) < 5) out.add(new ItemStack(ModItems.KEYCARD));
         return out;
     }
 

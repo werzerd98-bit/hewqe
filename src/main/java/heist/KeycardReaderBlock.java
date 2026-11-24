@@ -21,8 +21,8 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 
 /**
- * Считыватель ключ-карт. Если приложить карту нужного уровня (или выше),
- * блок на 5 секунд выдаёт сигнал редстоуна — рядом ставится железная дверь.
+ * Считыватель ключ-карт. Карта включает сигнал редстоуна, и он держится, пока карту не приложат
+ * ещё раз: открытая дверь сама не закрывается.
  */
 public class KeycardReaderBlock extends Block {
     public static final BooleanProperty POWERED = Properties.POWERED;
@@ -49,26 +49,21 @@ public class KeycardReaderBlock extends Block {
         if (world.isClient) return ActionResult.SUCCESS;
 
         var stack = player.getStackInHand(hand);
-        if (stack.getItem() instanceof KeycardItem card && card.getTier() >= tier) {
-            if (!state.get(POWERED)) {
-                world.setBlockState(pos, state.with(POWERED, true), Block.NOTIFY_ALL);
-                world.scheduleBlockTick(pos, this, 100);
+        if (stack.getItem() instanceof KeycardItem) {
+            boolean on = !state.get(POWERED);
+            world.setBlockState(pos, state.with(POWERED, on), Block.NOTIFY_ALL);
+            if (on) {
                 world.playSound(null, pos, SoundEvents.BLOCK_AMETHYST_BLOCK_CHIME, SoundCategory.BLOCKS, 1.5f, 1.4f);
-                player.sendMessage(Text.literal("Доступ разрешён").formatted(Formatting.GREEN), true);
+                player.sendMessage(Text.literal("Доступ разрешён: дверь открыта").formatted(Formatting.GREEN), true);
+            } else {
+                world.playSound(null, pos, SoundEvents.BLOCK_COMPARATOR_CLICK, SoundCategory.BLOCKS, 0.8f, 0.8f);
+                player.sendMessage(Text.literal("Дверь закрыта").formatted(Formatting.YELLOW), true);
             }
         } else {
             world.playSound(null, pos, SoundEvents.ENTITY_VILLAGER_NO, SoundCategory.BLOCKS, 0.8f, 1.0f);
-            player.sendMessage(Text.literal("Доступ запрещён. Нужна ключ-карта уровня " + tier).formatted(Formatting.RED), true);
+            player.sendMessage(Text.literal("Доступ запрещён. Нужна ключ-карта.").formatted(Formatting.RED), true);
         }
         return ActionResult.CONSUME;
-    }
-
-    @Override
-    public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
-        if (state.get(POWERED)) {
-            world.setBlockState(pos, state.with(POWERED, false), Block.NOTIFY_ALL);
-            world.playSound(null, pos, SoundEvents.BLOCK_COMPARATOR_CLICK, SoundCategory.BLOCKS, 0.6f, 0.8f);
-        }
     }
 
     @Override

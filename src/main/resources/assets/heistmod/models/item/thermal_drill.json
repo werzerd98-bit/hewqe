@@ -1,6 +1,3 @@
 {
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "heistmod:item/thermal_drill"
-  }
+  "parent": "heistmod:block/thermal_drill"
 }

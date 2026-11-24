@@ -28,9 +28,6 @@
   "key.heistmod.next_camera": "Next camera",
   "key.categories.heistmod": "Heist Mod",
   "item.heistmod.drill": "Thermal Drill",
-  "item.heistmod.keycard_green": "Green Keycard",
-  "item.heistmod.keycard_blue": "Blue Keycard",
-  "item.heistmod.keycard_red": "Red Keycard",
   "item.heistmod.gold_bar": "Gold Bar",
   "item.heistmod.cash_bundle": "Cash Bundle",
   "item.heistmod.jewelry": "Jewelry",
@@ -43,5 +40,6 @@
   "block.heistmod.door_breach_wood": "Weak Door (needs C4)",
   "block.heistmod.door_breach_steel": "Reinforced Door (needs C4)",
   "block.heistmod.c4": "C4 Charge (game-style)",
-  "screen.heistmod.lockpick": "Lockpicking"
+  "screen.heistmod.lockpick": "Lockpicking",
+  "item.heistmod.keycard": "Keycard"
 }

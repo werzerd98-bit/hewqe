@@ -1,6 +1,3 @@
 {
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "heistmod:item/drill"
-  }
+  "parent": "heistmod:block/drill"
 }
