@@ -35,6 +35,13 @@ public class HeistMod implements ModInitializer {
                         entries.add(ModBlocks.READER_RED);
                         entries.add(ModBlocks.SECURITY_DOOR);
                         entries.add(ModBlocks.CODE_PANEL);
+                        entries.add(ModItems.LOCKPICK);
+                        entries.add(ModBlocks.DOOR_WOOD_LOCKED);
+                        entries.add(ModBlocks.DOOR_STEEL_LOCKED);
+                        entries.add(ModBlocks.DOOR_GRATE_LOCKED);
+                        entries.add(ModBlocks.DOOR_BREACH_WOOD);
+                        entries.add(ModBlocks.DOOR_BREACH_STEEL);
+                        entries.add(ModBlocks.C4);
                         entries.add(ModBlocks.ESCAPE_VAN);
                         entries.add(ModBlocks.CAMERA);
                         entries.add(ModBlocks.COMPUTER);
@@ -58,6 +65,7 @@ public class HeistMod implements ModInitializer {
         ModItems.init();
         ModBlockEntities.init();
         ModNetworking.registerServer();
+        LockpickManager.init();
         DrillManager.init();
         CameraRegistry.init();
         LootBags.init();

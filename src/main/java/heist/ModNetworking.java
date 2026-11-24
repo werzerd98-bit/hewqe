@@ -27,7 +27,22 @@ public final class ModNetworking {
     /** Клиент -> сервер: отправить введённый код (BlockPos, String). */
     public static final Identifier SUBMIT_CODE = HeistMod.id("submit_code");
 
+    /** Сервер -> клиент: начало взлома (pos, pins, halfPeriod, maxFails, pins*(center,half), startTick). */
+    public static final Identifier OPEN_LOCKPICK = HeistMod.id("open_lockpick");
+    /** Сервер -> клиент: ход взлома (pos, byte code, index, startTick, fails). */
+    public static final Identifier LOCKPICK_STATE = HeistMod.id("lockpick_state");
+    /** Клиент -> сервер: действие взлома (byte: 0 нажать, 1 отменить). */
+    public static final Identifier LOCKPICK_ACTION = HeistMod.id("lockpick_action");
+
     public static void registerServer() {
+        ServerPlayNetworking.registerGlobalReceiver(LOCKPICK_ACTION, (server, player, handler, buf, responseSender) -> {
+            int action = buf.readByte();
+            server.execute(() -> {
+                if (action == 0) LockpickManager.press(player);
+                else LockpickManager.cancel(player);
+            });
+        });
+
         ServerPlayNetworking.registerGlobalReceiver(DRILL_ACTION, (server, player, handler, buf, responseSender) -> {
             BlockPos pos = buf.readBlockPos();
             int action = buf.readByte();

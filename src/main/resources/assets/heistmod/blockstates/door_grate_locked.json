@@ -1,0 +1,28 @@
+{
+  "variants": {
+    "facing=north,open=false": {
+      "model": "heistmod:block/door_grate_locked"
+    },
+    "facing=north,open=true": {
+      "model": "heistmod:block/door_grate_locked_open"
+    },
+    "facing=east,open=false": {
+      "model": "heistmod:block/door_grate_locked"
+    },
+    "facing=east,open=true": {
+      "model": "heistmod:block/door_grate_locked_open"
+    },
+    "facing=south,open=false": {
+      "model": "heistmod:block/door_grate_locked"
+    },
+    "facing=south,open=true": {
+      "model": "heistmod:block/door_grate_locked_open"
+    },
+    "facing=west,open=false": {
+      "model": "heistmod:block/door_grate_locked"
+    },
+    "facing=west,open=true": {
+      "model": "heistmod:block/door_grate_locked_open"
+    }
+  }
+}

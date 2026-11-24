@@ -78,6 +78,24 @@ public final class ModBlocks {
     public static final Block ESCAPE_VAN = register("escape_van",
             new EscapeVanBlock(FabricBlockSettings.create().strength(5.0f, 6.0f).nonOpaque().sounds(BlockSoundGroup.METAL)));
 
+    /** Запертые двери: вскрываются отмычкой (число штифтов = сложность). */
+    public static final Block DOOR_WOOD_LOCKED = register("door_wood_locked",
+            new PickDoorBlock(FabricBlockSettings.create().strength(-1.0f, 3600000.0f).nonOpaque().sounds(BlockSoundGroup.WOOD), 3));
+    public static final Block DOOR_STEEL_LOCKED = register("door_steel_locked",
+            new PickDoorBlock(FabricBlockSettings.create().strength(-1.0f, 3600000.0f).nonOpaque().sounds(BlockSoundGroup.METAL), 4));
+    public static final Block DOOR_GRATE_LOCKED = register("door_grate_locked",
+            new PickDoorBlock(FabricBlockSettings.create().strength(-1.0f, 3600000.0f).nonOpaque().sounds(BlockSoundGroup.CHAIN), 5));
+
+    /** Двери под взрывчатку. */
+    public static final Block DOOR_BREACH_WOOD = register("door_breach_wood",
+            new BreachDoorBlock(FabricBlockSettings.create().strength(-1.0f, 3600000.0f).sounds(BlockSoundGroup.WOOD)));
+    public static final Block DOOR_BREACH_STEEL = register("door_breach_steel",
+            new BreachDoorBlock(FabricBlockSettings.create().strength(-1.0f, 3600000.0f).sounds(BlockSoundGroup.METAL)));
+
+    /** Игровая (ненастоящая) взрывчатка. */
+    public static final Block C4 = register("c4",
+            new C4Block(FabricBlockSettings.create().strength(0.5f).noCollision().nonOpaque().sounds(BlockSoundGroup.METAL)));
+
     private static Block register(String name, Block block) {
         return register(name, block, new FabricItemSettings());
     }

@@ -73,6 +73,10 @@ public class SafeBlock extends BlockWithEntity {
                 player.sendMessage(Text.literal("Сейф сверлят... подожди."), true);
                 return ActionResult.CONSUME;
             }
+            if (LockpickManager.holdsLockpick(player)) {
+                LockpickManager.start((ServerPlayerEntity) player, sw, pos, 5);
+                return ActionResult.CONSUME;
+            }
             PacketByteBuf buf = PacketByteBufs.create();
             buf.writeBlockPos(pos);
             ServerPlayNetworking.send((ServerPlayerEntity) player, ModNetworking.OPEN_KEYPAD, buf);

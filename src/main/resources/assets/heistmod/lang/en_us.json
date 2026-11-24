@@ -35,5 +35,13 @@
   "item.heistmod.cash_bundle": "Cash Bundle",
   "item.heistmod.jewelry": "Jewelry",
   "item.heistmod.painting": "Painting",
-  "item.heistmod.code_note": "Code Note"
+  "item.heistmod.code_note": "Code Note",
+  "item.heistmod.lockpick": "Lockpick",
+  "block.heistmod.door_wood_locked": "Locked Wooden Door",
+  "block.heistmod.door_steel_locked": "Locked Steel Door",
+  "block.heistmod.door_grate_locked": "Locked Grate",
+  "block.heistmod.door_breach_wood": "Weak Door (needs C4)",
+  "block.heistmod.door_breach_steel": "Reinforced Door (needs C4)",
+  "block.heistmod.c4": "C4 Charge (game-style)",
+  "screen.heistmod.lockpick": "Lockpicking"
 }

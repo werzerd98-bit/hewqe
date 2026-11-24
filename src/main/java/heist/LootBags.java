@@ -30,15 +30,20 @@ public final class LootBags {
 
     /** Кладёт единицу добычи в сумку в левой руке. false — если руки заняты или сумка не подходит. */
     public static boolean tryCollect(PlayerEntity player, String kind) {
+        return tryCollect(player, kind, 1);
+    }
+
+    /** Кладёт amount единиц добычи в сумку в левой руке. */
+    public static boolean tryCollect(PlayerEntity player, String kind, int amount) {
         ItemStack off = player.getOffHandStack();
         if (off.isEmpty()) {
-            player.setStackInHand(Hand.OFF_HAND, LootBagItem.create(kind, 1));
+            player.setStackInHand(Hand.OFF_HAND, LootBagItem.create(kind, Math.min(amount, LootBagItem.CAPACITY)));
             return true;
         }
         if (off.getItem() instanceof LootBagItem
                 && kind.equals(LootBagItem.kind(off))
-                && LootBagItem.units(off) < LootBagItem.CAPACITY) {
-            off.getOrCreateNbt().putInt("Units", LootBagItem.units(off) + 1);
+                && LootBagItem.units(off) + amount <= LootBagItem.CAPACITY) {
+            off.getOrCreateNbt().putInt("Units", LootBagItem.units(off) + amount);
             return true;
         }
         return false;

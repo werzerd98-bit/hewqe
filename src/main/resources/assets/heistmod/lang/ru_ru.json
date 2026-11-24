@@ -35,5 +35,13 @@
   "item.heistmod.cash_bundle": "Пачка денег",
   "item.heistmod.jewelry": "Украшения",
   "item.heistmod.painting": "Картина",
-  "item.heistmod.code_note": "Записка с кодом"
+  "item.heistmod.code_note": "Записка с кодом",
+  "item.heistmod.lockpick": "Отмычка",
+  "block.heistmod.door_wood_locked": "Запертая деревянная дверь",
+  "block.heistmod.door_steel_locked": "Запертая стальная дверь",
+  "block.heistmod.door_grate_locked": "Запертая решётка",
+  "block.heistmod.door_breach_wood": "Хлипкая дверь (под взрывчатку)",
+  "block.heistmod.door_breach_steel": "Укреплённая дверь (под взрывчатку)",
+  "block.heistmod.c4": "Взрывчатка C4 (игровая)",
+  "screen.heistmod.lockpick": "Взлом замка"
 }

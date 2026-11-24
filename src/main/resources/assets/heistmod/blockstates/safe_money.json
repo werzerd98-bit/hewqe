@@ -6,28 +6,10 @@
     "facing=north,open=false,units=1": {
       "model": "heistmod:block/safe_money_closed"
     },
-    "facing=north,open=false,units=2": {
-      "model": "heistmod:block/safe_money_closed"
-    },
-    "facing=north,open=false,units=3": {
-      "model": "heistmod:block/safe_money_closed"
-    },
-    "facing=north,open=false,units=4": {
-      "model": "heistmod:block/safe_money_closed"
-    },
     "facing=north,open=true,units=0": {
       "model": "heistmod:block/safe_money_open_empty"
     },
     "facing=north,open=true,units=1": {
-      "model": "heistmod:block/safe_money_open"
-    },
-    "facing=north,open=true,units=2": {
-      "model": "heistmod:block/safe_money_open"
-    },
-    "facing=north,open=true,units=3": {
-      "model": "heistmod:block/safe_money_open"
-    },
-    "facing=north,open=true,units=4": {
       "model": "heistmod:block/safe_money_open"
     },
     "facing=east,open=false,units=0": {
@@ -35,18 +17,6 @@
       "y": 90
     },
     "facing=east,open=false,units=1": {
-      "model": "heistmod:block/safe_money_closed",
-      "y": 90
-    },
-    "facing=east,open=false,units=2": {
-      "model": "heistmod:block/safe_money_closed",
-      "y": 90
-    },
-    "facing=east,open=false,units=3": {
-      "model": "heistmod:block/safe_money_closed",
-      "y": 90
-    },
-    "facing=east,open=false,units=4": {
       "model": "heistmod:block/safe_money_closed",
       "y": 90
     },
@@ -58,35 +28,11 @@
       "model": "heistmod:block/safe_money_open",
       "y": 90
     },
-    "facing=east,open=true,units=2": {
-      "model": "heistmod:block/safe_money_open",
-      "y": 90
-    },
-    "facing=east,open=true,units=3": {
-      "model": "heistmod:block/safe_money_open",
-      "y": 90
-    },
-    "facing=east,open=true,units=4": {
-      "model": "heistmod:block/safe_money_open",
-      "y": 90
-    },
     "facing=south,open=false,units=0": {
       "model": "heistmod:block/safe_money_closed",
       "y": 180
     },
     "facing=south,open=false,units=1": {
-      "model": "heistmod:block/safe_money_closed",
-      "y": 180
-    },
-    "facing=south,open=false,units=2": {
-      "model": "heistmod:block/safe_money_closed",
-      "y": 180
-    },
-    "facing=south,open=false,units=3": {
-      "model": "heistmod:block/safe_money_closed",
-      "y": 180
-    },
-    "facing=south,open=false,units=4": {
       "model": "heistmod:block/safe_money_closed",
       "y": 180
     },
@@ -98,18 +44,6 @@
       "model": "heistmod:block/safe_money_open",
       "y": 180
     },
-    "facing=south,open=true,units=2": {
-      "model": "heistmod:block/safe_money_open",
-      "y": 180
-    },
-    "facing=south,open=true,units=3": {
-      "model": "heistmod:block/safe_money_open",
-      "y": 180
-    },
-    "facing=south,open=true,units=4": {
-      "model": "heistmod:block/safe_money_open",
-      "y": 180
-    },
     "facing=west,open=false,units=0": {
       "model": "heistmod:block/safe_money_closed",
       "y": 270
@@ -118,35 +52,11 @@
       "model": "heistmod:block/safe_money_closed",
       "y": 270
     },
-    "facing=west,open=false,units=2": {
-      "model": "heistmod:block/safe_money_closed",
-      "y": 270
-    },
-    "facing=west,open=false,units=3": {
-      "model": "heistmod:block/safe_money_closed",
-      "y": 270
-    },
-    "facing=west,open=false,units=4": {
-      "model": "heistmod:block/safe_money_closed",
-      "y": 270
-    },
     "facing=west,open=true,units=0": {
       "model": "heistmod:block/safe_money_open_empty",
       "y": 270
     },
     "facing=west,open=true,units=1": {
-      "model": "heistmod:block/safe_money_open",
-      "y": 270
-    },
-    "facing=west,open=true,units=2": {
-      "model": "heistmod:block/safe_money_open",
-      "y": 270
-    },
-    "facing=west,open=true,units=3": {
-      "model": "heistmod:block/safe_money_open",
-      "y": 270
-    },
-    "facing=west,open=true,units=4": {
       "model": "heistmod:block/safe_money_open",
       "y": 270
     }

@@ -24,12 +24,15 @@ import org.jetbrains.annotations.Nullable;
 
 /**
  * Сейф с золотом или деньгами. Закрытый открывается только сверлением (дрелью или термобуром).
- * В открытом лежит добыча: каждое ПКМ перекладывает единицу в сумку в левой руке (всего 4 единицы).
+ * В открытом лежит одна большая добыча, она равна целой сумке (4 единицы): ПКМ забирает её всю.
  */
 public class LootSafeBlock extends Block {
     public static final DirectionProperty FACING = Properties.HORIZONTAL_FACING;
     public static final BooleanProperty OPEN = Properties.OPEN;
-    public static final IntProperty UNITS = IntProperty.of("units", 0, 4);
+    public static final IntProperty UNITS = IntProperty.of("units", 0, 1);
+
+    /** Одна добыча в сейфе весит как целая сумка. */
+    public static final int LOOT_UNITS = 4;
 
     private final String kind;
 
@@ -37,7 +40,7 @@ public class LootSafeBlock extends Block {
         super(settings);
         this.kind = kind;
         setDefaultState(getStateManager().getDefaultState()
-                .with(FACING, Direction.NORTH).with(OPEN, false).with(UNITS, 4));
+                .with(FACING, Direction.NORTH).with(OPEN, false).with(UNITS, 1));
     }
 
     public String getKind() {
@@ -80,16 +83,15 @@ public class LootSafeBlock extends Block {
             return ActionResult.CONSUME;
         }
 
-        int units = state.get(UNITS);
-        if (units <= 0) {
+        if (state.get(UNITS) <= 0) {
             player.sendMessage(Text.literal("Сейф пуст."), true);
-        } else if (LootBags.tryCollect(player, kind)) {
-            world.setBlockState(pos, state.with(UNITS, units - 1), Block.NOTIFY_ALL);
+        } else if (LootBags.tryCollect(player, kind, LOOT_UNITS)) {
+            world.setBlockState(pos, state.with(UNITS, 0), Block.NOTIFY_ALL);
             world.playSound(null, pos, SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.PLAYERS, 0.7f, 0.8f);
             player.sendMessage(Text.literal("Добыча в сумке: " + LootBagItem.units(player.getOffHandStack())
                     + " / " + LootBagItem.CAPACITY).formatted(Formatting.GREEN), true);
         } else {
-            player.sendMessage(Text.literal("Левая рука занята или сумка полна.").formatted(Formatting.RED), true);
+            player.sendMessage(Text.literal("Нужна пустая сумка в левой руке (добыча занимает 4 места).").formatted(Formatting.RED), true);
         }
         return ActionResult.CONSUME;
     }

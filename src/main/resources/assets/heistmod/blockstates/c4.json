@@ -1,0 +1,94 @@
+{
+  "variants": {
+    "facing=north,fuse=0": {
+      "model": "heistmod:block/c4"
+    },
+    "facing=north,fuse=1": {
+      "model": "heistmod:block/c4_armed"
+    },
+    "facing=north,fuse=2": {
+      "model": "heistmod:block/c4_armed"
+    },
+    "facing=north,fuse=3": {
+      "model": "heistmod:block/c4_armed"
+    },
+    "facing=north,fuse=4": {
+      "model": "heistmod:block/c4_armed"
+    },
+    "facing=north,fuse=5": {
+      "model": "heistmod:block/c4_armed"
+    },
+    "facing=east,fuse=0": {
+      "model": "heistmod:block/c4",
+      "y": 90
+    },
+    "facing=east,fuse=1": {
+      "model": "heistmod:block/c4_armed",
+      "y": 90
+    },
+    "facing=east,fuse=2": {
+      "model": "heistmod:block/c4_armed",
+      "y": 90
+    },
+    "facing=east,fuse=3": {
+      "model": "heistmod:block/c4_armed",
+      "y": 90
+    },
+    "facing=east,fuse=4": {
+      "model": "heistmod:block/c4_armed",
+      "y": 90
+    },
+    "facing=east,fuse=5": {
+      "model": "heistmod:block/c4_armed",
+      "y": 90
+    },
+    "facing=south,fuse=0": {
+      "model": "heistmod:block/c4",
+      "y": 180
+    },
+    "facing=south,fuse=1": {
+      "model": "heistmod:block/c4_armed",
+      "y": 180
+    },
+    "facing=south,fuse=2": {
+      "model": "heistmod:block/c4_armed",
+      "y": 180
+    },
+    "facing=south,fuse=3": {
+      "model": "heistmod:block/c4_armed",
+      "y": 180
+    },
+    "facing=south,fuse=4": {
+      "model": "heistmod:block/c4_armed",
+      "y": 180
+    },
+    "facing=south,fuse=5": {
+      "model": "heistmod:block/c4_armed",
+      "y": 180
+    },
+    "facing=west,fuse=0": {
+      "model": "heistmod:block/c4",
+      "y": 270
+    },
+    "facing=west,fuse=1": {
+      "model": "heistmod:block/c4_armed",
+      "y": 270
+    },
+    "facing=west,fuse=2": {
+      "model": "heistmod:block/c4_armed",
+      "y": 270
+    },
+    "facing=west,fuse=3": {
+      "model": "heistmod:block/c4_armed",
+      "y": 270
+    },
+    "facing=west,fuse=4": {
+      "model": "heistmod:block/c4_armed",
+      "y": 270
+    },
+    "facing=west,fuse=5": {
+      "model": "heistmod:block/c4_armed",
+      "y": 270
+    }
+  }
+}

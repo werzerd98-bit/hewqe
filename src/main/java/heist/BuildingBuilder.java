@@ -38,8 +38,38 @@ public final class BuildingBuilder {
         new BuildingBuilder(w, origin).buildDoor();
     }
 
+    public static void doors(ServerWorld w, BlockPos origin) {
+        new BuildingBuilder(w, origin).buildDoors();
+    }
+
     public static void jewelry(ServerWorld w, BlockPos origin) {
         new BuildingBuilder(w, origin).buildJewelry();
+    }
+
+    /** Демо-стена: три запертые двери и две под взрывчатку. Сторона входа — север (z меньше). */
+    private void buildDoors() {
+        BlockState wall = Blocks.STONE_BRICKS.getDefaultState();
+        fill(-1, 0, 0, 24, 0, 3, Blocks.SMOOTH_STONE.getDefaultState());
+        fill(-1, 1, 0, 24, 4, 0, wall);
+        BlockState face = AIR;
+        // x: 2 дерево, 6 сталь, 10 решётка, 14-15 взрывчатка (дерево), 19-20 взрывчатка (сталь)
+        BlockState wood = ModBlocks.DOOR_WOOD_LOCKED.getDefaultState().with(PickDoorBlock.FACING, Direction.NORTH);
+        BlockState steel = ModBlocks.DOOR_STEEL_LOCKED.getDefaultState().with(PickDoorBlock.FACING, Direction.NORTH);
+        BlockState grate = ModBlocks.DOOR_GRATE_LOCKED.getDefaultState().with(PickDoorBlock.FACING, Direction.NORTH);
+        fill(2, 1, 0, 2, 2, 0, wood);
+        fill(6, 1, 0, 6, 2, 0, steel);
+        fill(10, 1, 0, 10, 2, 0, grate);
+        fill(14, 1, 0, 15, 2, 0, ModBlocks.DOOR_BREACH_WOOD.getDefaultState());
+        fill(19, 1, 0, 20, 2, 0, ModBlocks.DOOR_BREACH_STEEL.getDefaultState());
+        fill(-1, 1, 1, 24, 3, 3, face);
+
+        // сундук с инструментами за дверью №1
+        set(0, 1, 2, Blocks.CHEST.getDefaultState());
+        if (w.getBlockEntity(o.add(0, 1, 2)) instanceof Inventory inv) {
+            inv.setStack(0, new ItemStack(ModItems.LOCKPICK, 8));
+            inv.setStack(1, new ItemStack(ModBlocks.C4, 6));
+        }
+        set(1, 1, 2, Blocks.LANTERN.getDefaultState());
     }
 
     // ------------------------------------------------------------------ helpers

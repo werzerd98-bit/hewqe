@@ -29,7 +29,8 @@ public final class HeistCommand {
                                 .then(CommandManager.literal("bank").executes(ctx -> build(ctx.getSource(), true)))
                                 .then(CommandManager.literal("jewelry").executes(ctx -> build(ctx.getSource(), false)))
                                 .then(CommandManager.literal("door").executes(ctx -> buildExtra(ctx.getSource(), true)))
-                                .then(CommandManager.literal("van").executes(ctx -> buildExtra(ctx.getSource(), false))))
+                                .then(CommandManager.literal("van").executes(ctx -> buildExtra(ctx.getSource(), false)))
+                                .then(CommandManager.literal("doors").executes(ctx -> buildDoors(ctx.getSource()))))
                         .then(CommandManager.literal("kit").executes(ctx -> kit(ctx.getSource())))
                         .then(CommandManager.literal("note").executes(ctx -> note(ctx.getSource())))));
     }
@@ -56,10 +57,19 @@ public final class HeistCommand {
         player.giveItemStack(new ItemStack(ModBlocks.CAMERA, 2));
         player.giveItemStack(new ItemStack(ModBlocks.COMPUTER));
         player.giveItemStack(new ItemStack(ModBlocks.PAINTING, 2));
+        player.giveItemStack(new ItemStack(ModItems.LOCKPICK, 4));
+        player.giveItemStack(new ItemStack(ModBlocks.C4, 4));
         player.giveItemStack(new ItemStack(ModItems.KEYCARD_GREEN));
         player.giveItemStack(new ItemStack(ModItems.KEYCARD_BLUE));
         player.giveItemStack(new ItemStack(ModItems.KEYCARD_RED));
         src.sendFeedback(() -> Text.literal("Выдан набор: дрель, термобур, камеры, компьютер, картины и три ключ-карты."), false);
+        return 1;
+    }
+
+    private static int buildDoors(ServerCommandSource src) throws CommandSyntaxException {
+        ServerPlayerEntity player = src.getPlayerOrThrow();
+        BuildingBuilder.doors(src.getWorld(), player.getBlockPos().down().add(-10, 0, 4));
+        src.sendFeedback(() -> Text.literal("Стена с дверями построена: три запертые (отмычка) и две под взрывчатку (C4). Инструменты в сундуке."), true);
         return 1;
     }
 

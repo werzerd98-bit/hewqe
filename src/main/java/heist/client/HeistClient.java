@@ -25,6 +25,37 @@ public class HeistClient implements ClientModInitializer {
         BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.ESCAPE_VAN, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.SECURITY_DOOR, RenderLayer.getCutout());
 
+        BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.DOOR_GRATE_LOCKED, RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.C4, RenderLayer.getCutout());
+
+        ClientPlayNetworking.registerGlobalReceiver(ModNetworking.OPEN_LOCKPICK, (client, handler, buf, responseSender) -> {
+            buf.readBlockPos();
+            int pins = buf.readVarInt();
+            int halfPeriod = buf.readVarInt();
+            int maxFails = buf.readVarInt();
+            float[] center = new float[pins];
+            float[] half = new float[pins];
+            for (int i = 0; i < pins; i++) {
+                center[i] = buf.readFloat();
+                half[i] = buf.readFloat();
+            }
+            long start = buf.readLong();
+            client.execute(() -> client.setScreen(new LockpickScreen(pins, halfPeriod, maxFails, center, half, start)));
+        });
+
+        ClientPlayNetworking.registerGlobalReceiver(ModNetworking.LOCKPICK_STATE, (client, handler, buf, responseSender) -> {
+            buf.readBlockPos();
+            int code = buf.readByte();
+            int idx = buf.readVarInt();
+            long start = buf.readLong();
+            int fails = buf.readVarInt();
+            client.execute(() -> {
+                if (client.currentScreen instanceof LockpickScreen screen) {
+                    screen.onState(code, idx, start, fails);
+                }
+            });
+        });
+
         ClientTickEvents.END_CLIENT_TICK.register(CameraView::tick);
         HudRenderCallback.EVENT.register(CameraView::renderHud);
 
