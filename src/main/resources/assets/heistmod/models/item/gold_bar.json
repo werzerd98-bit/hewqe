@@ -1,6 +1,156 @@
 {
-  "parent": "minecraft:item/generated",
+  "parent": "minecraft:block/block",
   "textures": {
-    "layer0": "heistmod:item/gold_bar"
+    "0": "heistmod:block/safe_loot_gold",
+    "particle": "heistmod:block/safe_loot_gold"
+  },
+  "elements": [
+    {
+      "name": "GoldIngot",
+      "from": [
+        6.5,
+        7.5,
+        5.0
+      ],
+      "to": [
+        9.5,
+        8.5,
+        11.0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            14.00781,
+            0,
+            16,
+            5.23438
+          ],
+          "texture": "#0"
+        },
+        "east": {
+          "uv": [
+            12.27344,
+            8.67969,
+            0,
+            5.96875
+          ],
+          "texture": "#0"
+        },
+        "south": {
+          "uv": [
+            14,
+            5,
+            16,
+            0
+          ],
+          "texture": "#0"
+        },
+        "west": {
+          "uv": [
+            12.60938,
+            8.65625,
+            0,
+            5.96094
+          ],
+          "texture": "#0"
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            12.46875,
+            5.375
+          ],
+          "rotation": 90,
+          "texture": "#0"
+        },
+        "down": {
+          "uv": [
+            0,
+            14,
+            12.5,
+            9
+          ],
+          "texture": "#0"
+        }
+      }
+    }
+  ],
+  "display": {
+    "gui": {
+      "rotation": [
+        30,
+        225,
+        0
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        3.2,
+        3.2,
+        3.2
+      ]
+    },
+    "ground": {
+      "translation": [
+        0,
+        2,
+        0
+      ],
+      "scale": [
+        1.6,
+        1.6,
+        1.6
+      ]
+    },
+    "fixed": {
+      "rotation": [
+        0,
+        90,
+        0
+      ],
+      "scale": [
+        3,
+        3,
+        3
+      ]
+    },
+    "thirdperson_righthand": {
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "translation": [
+        0,
+        3,
+        1
+      ],
+      "scale": [
+        1.5,
+        1.5,
+        1.5
+      ]
+    },
+    "firstperson_righthand": {
+      "rotation": [
+        0,
+        -30,
+        0
+      ],
+      "translation": [
+        0,
+        3,
+        3
+      ],
+      "scale": [
+        2,
+        2,
+        2
+      ]
+    }
   }
 }
