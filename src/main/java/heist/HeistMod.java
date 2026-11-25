@@ -38,6 +38,7 @@ public class HeistMod implements ModInitializer {
                         entries.add(ModBlocks.DOOR_BREACH_WOOD);
                         entries.add(ModBlocks.DOOR_BREACH_STEEL);
                         entries.add(ModBlocks.C4);
+                        entries.add(ModBlocks.ALARM);
                         entries.add(ModBlocks.ESCAPE_VAN);
                         entries.add(ModBlocks.CAMERA);
                         entries.add(ModBlocks.COMPUTER);

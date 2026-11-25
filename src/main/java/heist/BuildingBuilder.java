@@ -123,10 +123,17 @@ public final class BuildingBuilder {
         set(x, y, z, ModBlocks.CASH_REGISTER.getDefaultState().with(CashRegisterBlock.FACING, facing));
     }
 
+    /** Стена остаётся целой, панель вешается на её бок (face — сторона, куда смотрит панель). */
     private void panel(int x, int y, int z, Direction face, String code) {
-        set(x, y, z, ModBlocks.CODE_PANEL.getDefaultState().with(CodePanelBlock.FACING, face));
-        if (w.getBlockEntity(o.add(x, y, z)) instanceof CodePanelBlockEntity p) {
-            p.setCode(code);
+        BlockPos wall = o.add(x, y, z);
+        if (!w.getBlockState(wall).isOpaqueFullCube(w, wall)) {
+            set(x, y, z, Blocks.STONE_BRICKS.getDefaultState());
+        }
+        BlockPos p = wall.offset(face);
+        w.setBlockState(p, ModBlocks.CODE_PANEL.getDefaultState().with(CodePanelBlock.FACING, face),
+                Block.NOTIFY_LISTENERS | Block.FORCE_STATE);
+        if (w.getBlockEntity(p) instanceof CodePanelBlockEntity panel) {
+            panel.setCode(code);
         }
     }
 

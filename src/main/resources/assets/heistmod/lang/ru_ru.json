@@ -39,5 +39,6 @@
   "block.heistmod.c4": "Взрывчатка C4 (игровая)",
   "screen.heistmod.lockpick": "Взлом замка",
   "item.heistmod.keycard": "Ключ-карта",
-  "block.heistmod.keycard_reader": "Считыватель карт"
+  "block.heistmod.keycard_reader": "Считыватель карт",
+  "block.heistmod.alarm": "Сигнализация"
 }

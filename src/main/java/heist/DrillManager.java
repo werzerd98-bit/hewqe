@@ -92,6 +92,7 @@ public final class DrillManager {
         SESSIONS.put(key(world, pos), session);
         if (drill != null) broadcastStatus(world, drill, 1, session.total, session.total);
         world.playSound(null, pos, SoundEvents.BLOCK_ANVIL_PLACE, SoundCategory.BLOCKS, 1.0f, 0.8f);
+        AlarmBlock.triggerNear(world, pos, 32);
         if (vault) {
             alarm(world, pos);
         }

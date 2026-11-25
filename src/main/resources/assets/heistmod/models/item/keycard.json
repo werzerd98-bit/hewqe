@@ -1,6 +1,163 @@
 {
-  "parent": "minecraft:item/generated",
+  "parent": "minecraft:block/block",
   "textures": {
-    "layer0": "heistmod:item/keycard"
+    "1": "heistmod:block/keycard_texture1",
+    "particle": "heistmod:block/keycard_texture1"
+  },
+  "elements": [
+    {
+      "from": [
+        4,
+        7,
+        7
+      ],
+      "to": [
+        12,
+        11,
+        8
+      ],
+      "rotation": {
+        "angle": 0,
+        "axis": "y",
+        "origin": [
+          7,
+          7,
+          7
+        ]
+      },
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            8,
+            4
+          ],
+          "texture": "#1"
+        },
+        "east": {
+          "uv": [
+            8,
+            1,
+            9,
+            5
+          ],
+          "texture": "#1"
+        },
+        "south": {
+          "uv": [
+            0,
+            4,
+            8,
+            8
+          ],
+          "texture": "#1"
+        },
+        "west": {
+          "uv": [
+            8,
+            5,
+            9,
+            9
+          ],
+          "texture": "#1"
+        },
+        "up": {
+          "uv": [
+            0,
+            8,
+            8,
+            9
+          ],
+          "texture": "#1"
+        },
+        "down": {
+          "uv": [
+            8,
+            0,
+            16,
+            1
+          ],
+          "texture": "#1"
+        }
+      }
+    }
+  ],
+  "display": {
+    "gui": {
+      "rotation": [
+        30,
+        225,
+        0
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1.9,
+        1.9,
+        1.9
+      ]
+    },
+    "ground": {
+      "translation": [
+        0,
+        3,
+        0
+      ],
+      "scale": [
+        1.2,
+        1.2,
+        1.2
+      ]
+    },
+    "fixed": {
+      "rotation": [
+        0,
+        180,
+        0
+      ],
+      "scale": [
+        1.8,
+        1.8,
+        1.8
+      ]
+    },
+    "thirdperson_righthand": {
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "translation": [
+        0,
+        3,
+        1
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    "firstperson_righthand": {
+      "rotation": [
+        0,
+        -30,
+        0
+      ],
+      "translation": [
+        0,
+        3,
+        3
+      ],
+      "scale": [
+        1.5,
+        1.5,
+        1.5
+      ]
+    }
   }
 }

@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "heistmod:block/alarm",
+      "y": 270
+    },
+    "facing=east": {
+      "model": "heistmod:block/alarm"
+    },
+    "facing=south": {
+      "model": "heistmod:block/alarm",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "heistmod:block/alarm",
+      "y": 180
+    }
+  }
+}

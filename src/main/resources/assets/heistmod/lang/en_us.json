@@ -39,5 +39,6 @@
   "block.heistmod.c4": "C4 Charge (game-style)",
   "screen.heistmod.lockpick": "Lockpicking",
   "item.heistmod.keycard": "Keycard",
-  "block.heistmod.keycard_reader": "Keycard Reader"
+  "block.heistmod.keycard_reader": "Keycard Reader",
+  "block.heistmod.alarm": "Alarm"
 }

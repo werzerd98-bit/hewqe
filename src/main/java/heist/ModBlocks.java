@@ -68,7 +68,7 @@ public final class ModBlocks {
             new SecurityDoorBlock(FabricBlockSettings.create().strength(-1.0f, 3600000.0f).nonOpaque().sounds(BlockSoundGroup.METAL)));
 
     public static final Block CODE_PANEL = register("code_panel",
-            new CodePanelBlock(FabricBlockSettings.create().strength(3.0f, 6.0f).nonOpaque().sounds(BlockSoundGroup.METAL)));
+            new CodePanelBlock(FabricBlockSettings.create().strength(3.0f, 6.0f).nonOpaque().noCollision().sounds(BlockSoundGroup.METAL)));
 
     public static final Block ESCAPE_VAN = register("escape_van",
             new EscapeVanBlock(FabricBlockSettings.create().strength(5.0f, 6.0f).nonOpaque().sounds(BlockSoundGroup.METAL)));
@@ -86,6 +86,10 @@ public final class ModBlocks {
             new BreachDoorBlock(FabricBlockSettings.create().strength(-1.0f, 3600000.0f).sounds(BlockSoundGroup.WOOD)));
     public static final Block DOOR_BREACH_STEEL = register("door_breach_steel",
             new BreachDoorBlock(FabricBlockSettings.create().strength(-1.0f, 3600000.0f).sounds(BlockSoundGroup.METAL)));
+
+    /** Сигнализация: настенная панель. */
+    public static final Block ALARM = register("alarm",
+            new AlarmBlock(FabricBlockSettings.create().strength(2.0f).nonOpaque().noCollision().sounds(BlockSoundGroup.METAL)));
 
     /** Игровая (ненастоящая) взрывчатка. */
     public static final Block C4 = register("c4",

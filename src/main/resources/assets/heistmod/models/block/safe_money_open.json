@@ -3,7 +3,7 @@
     "particle": "heistmod:block/safe_side",
     "side": "heistmod:block/safe_side",
     "door": "heistmod:block/safe_money_front",
-    "loot": "heistmod:block/money_block"
+    "loot": "heistmod:block/safe_loot_money"
   },
   "elements": [
     {
@@ -484,135 +484,68 @@
     },
     {
       "from": [
-        3,
-        2,
-        3
+        5.3,
+        2.0,
+        1.1
       ],
       "to": [
-        13,
-        7,
-        12
+        10.7,
+        3.8,
+        11.9
       ],
       "faces": {
         "north": {
           "uv": [
-            0,
-            0,
-            16,
-            16
+            9.49688,
+            8.11458,
+            9.07083,
+            9.81042
           ],
           "texture": "#loot"
         },
         "east": {
           "uv": [
-            0,
-            0,
-            16,
-            16
+            6.0625,
+            10.36458,
+            9.02083,
+            9.90625
           ],
           "texture": "#loot"
         },
         "south": {
           "uv": [
-            0,
-            0,
-            16,
-            16
+            9.03437,
+            9.875,
+            9.48958,
+            8.09375
           ],
           "texture": "#loot"
         },
         "west": {
           "uv": [
-            0,
-            0,
-            16,
-            16
+            6.01042,
+            10.39583,
+            9.03125,
+            9.91667
           ],
           "texture": "#loot"
         },
         "up": {
           "uv": [
-            0,
-            0,
-            16,
-            16
+            6.02813,
+            8.08958,
+            9.01771,
+            9.86875
           ],
+          "rotation": 90,
           "texture": "#loot"
         },
         "down": {
           "uv": [
-            0,
-            0,
-            16,
-            16
-          ],
-          "texture": "#loot"
-        }
-      }
-    },
-    {
-      "from": [
-        4,
-        7,
-        4
-      ],
-      "to": [
-        12,
-        10,
-        11
-      ],
-      "faces": {
-        "north": {
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ],
-          "texture": "#loot"
-        },
-        "east": {
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ],
-          "texture": "#loot"
-        },
-        "south": {
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ],
-          "texture": "#loot"
-        },
-        "west": {
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ],
-          "texture": "#loot"
-        },
-        "up": {
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ],
-          "texture": "#loot"
-        },
-        "down": {
-          "uv": [
-            0,
-            0,
-            16,
-            16
+            4.0375,
+            11.05833,
+            6.20729,
+            13.17083
           ],
           "texture": "#loot"
         }

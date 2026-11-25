@@ -54,6 +54,7 @@ public class BreachDoorBlock extends Block {
                 }
             }
         }
+        AlarmBlock.triggerNear(world, start, 32);
         for (BlockPos p : found) {
             world.breakBlock(p, false);
         }
