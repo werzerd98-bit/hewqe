@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "heistmod:money_block"
+    }
+  ],
+  "result": {
+    "item": "heistmod:cash_bundle",
+    "count": 9
+  }
+}
