@@ -2,6 +2,9 @@ package heist;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.enums.DoubleBlockHalf;
+import net.minecraft.state.property.EnumProperty;
+import net.minecraft.state.property.Properties;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.LanternBlock;
 import net.minecraft.block.enums.DoubleBlockHalf;
@@ -46,6 +49,12 @@ public final class BuildingBuilder {
         new BuildingBuilder(w, origin).buildJewelry();
     }
 
+    private void twoHigh(int x, int z, BlockState door) {
+        EnumProperty<DoubleBlockHalf> half = Properties.DOUBLE_BLOCK_HALF;
+        set(x, 1, z, door.with(half, DoubleBlockHalf.LOWER));
+        set(x, 2, z, door.with(half, DoubleBlockHalf.UPPER));
+    }
+
     /** Демо-стена: три запертые двери и две под взрывчатку. Сторона входа — север (z меньше). */
     private void buildDoors() {
         BlockState wall = Blocks.STONE_BRICKS.getDefaultState();
@@ -56,11 +65,13 @@ public final class BuildingBuilder {
         BlockState wood = ModBlocks.DOOR_WOOD_LOCKED.getDefaultState().with(PickDoorBlock.FACING, Direction.NORTH);
         BlockState steel = ModBlocks.DOOR_STEEL_LOCKED.getDefaultState().with(PickDoorBlock.FACING, Direction.NORTH);
         BlockState grate = ModBlocks.DOOR_GRATE_LOCKED.getDefaultState().with(PickDoorBlock.FACING, Direction.NORTH);
-        fill(2, 1, 0, 2, 2, 0, wood);
-        fill(6, 1, 0, 6, 2, 0, steel);
-        fill(10, 1, 0, 10, 2, 0, grate);
-        fill(14, 1, 0, 15, 2, 0, ModBlocks.DOOR_BREACH_WOOD.getDefaultState());
-        fill(19, 1, 0, 20, 2, 0, ModBlocks.DOOR_BREACH_STEEL.getDefaultState());
+        twoHigh(2, 0, wood);
+        twoHigh(6, 0, steel);
+        twoHigh(10, 0, grate);
+        twoHigh(14, 0, ModBlocks.DOOR_BREACH_WOOD.getDefaultState());
+        twoHigh(15, 0, ModBlocks.DOOR_BREACH_WOOD.getDefaultState());
+        twoHigh(19, 0, ModBlocks.DOOR_BREACH_STEEL.getDefaultState());
+        twoHigh(20, 0, ModBlocks.DOOR_BREACH_STEEL.getDefaultState());
         fill(-1, 1, 1, 24, 3, 3, face);
 
         // сундук с инструментами за дверью №1

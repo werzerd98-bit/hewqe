@@ -2,6 +2,15 @@ package heist;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.ShapeContext;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.enums.DoubleBlockHalf;
+import net.minecraft.item.ItemStack;
+import net.minecraft.state.property.EnumProperty;
+import net.minecraft.item.ItemPlacementContext;
+import net.minecraft.state.StateManager;
+import net.minecraft.state.property.Properties;
+import org.jetbrains.annotations.Nullable;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
@@ -21,9 +30,55 @@ import java.util.Set;
 public class BreachDoorBlock extends Block {
     private static final int MAX_PARTS = 64;
 
+    public static final EnumProperty<DoubleBlockHalf> HALF = Properties.DOUBLE_BLOCK_HALF;
+
     public BreachDoorBlock(Settings settings) {
         super(settings);
+        setDefaultState(getStateManager().getDefaultState().with(HALF, DoubleBlockHalf.LOWER));
     }
+
+    @Override
+    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
+        builder.add(HALF);
+    }
+
+    @Nullable
+    @Override
+    public BlockState getPlacementState(ItemPlacementContext ctx) {
+        BlockPos pos = ctx.getBlockPos();
+        World world = ctx.getWorld();
+        if (pos.getY() >= world.getTopY() - 1 || !world.getBlockState(pos.up()).canReplace(ctx)) return null;
+        return getDefaultState().with(HALF, DoubleBlockHalf.LOWER);
+    }
+
+    @Override
+    public void onPlaced(World world, BlockPos pos, BlockState state, @Nullable net.minecraft.entity.LivingEntity placer, ItemStack stack) {
+        world.setBlockState(pos.up(), state.with(HALF, DoubleBlockHalf.UPPER), Block.NOTIFY_ALL);
+    }
+
+    @Override
+    public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighborState,
+                                                net.minecraft.world.WorldAccess world, BlockPos pos, BlockPos neighborPos) {
+        DoubleBlockHalf half = state.get(HALF);
+        if (direction.getAxis() == Direction.Axis.Y && (half == DoubleBlockHalf.LOWER) == (direction == Direction.UP)
+                && !(neighborState.isOf(this) && neighborState.get(HALF) != half)) {
+            return Blocks.AIR.getDefaultState();
+        }
+        return super.getStateForNeighborUpdate(state, direction, neighborState, world, pos, neighborPos);
+    }
+
+    @Override
+    public void onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
+        if (!world.isClient && player.isCreative()) {
+            BlockPos other = state.get(HALF) == DoubleBlockHalf.LOWER ? pos.up() : pos.down();
+            BlockState os = world.getBlockState(other);
+            if (os.isOf(this)) {
+                world.setBlockState(other, Blocks.AIR.getDefaultState(), Block.NOTIFY_ALL | Block.SKIP_DROPS);
+            }
+        }
+        super.onBreak(world, pos, state, player);
+    }
+
 
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {

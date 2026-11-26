@@ -2,6 +2,11 @@ package heist;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.enums.DoubleBlockHalf;
+import net.minecraft.item.ItemStack;
+import net.minecraft.state.property.EnumProperty;
+
 import net.minecraft.block.ShapeContext;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -34,11 +39,12 @@ import java.util.Set;
 
 /**
  * Запертая дверь: открывается только взломом отмычкой (мини-игра). Секции в одной плоскости
- * образуют одну дверь любого размера. Открытую дверь можно закрыть ПКМ (она снова будет заперта).
+ * образуют одну дверь любого размера. Вскрытая дверь остаётся открытой.
  */
 public class PickDoorBlock extends Block {
     public static final DirectionProperty FACING = Properties.HORIZONTAL_FACING;
     public static final BooleanProperty OPEN = Properties.OPEN;
+    public static final EnumProperty<DoubleBlockHalf> HALF = Properties.DOUBLE_BLOCK_HALF;
 
     private static final int MAX_PARTS = 64;
 
@@ -47,7 +53,7 @@ public class PickDoorBlock extends Block {
     public PickDoorBlock(Settings settings, int pins) {
         super(settings);
         this.pins = pins;
-        setDefaultState(getStateManager().getDefaultState().with(FACING, Direction.NORTH).with(OPEN, false));
+        setDefaultState(getStateManager().getDefaultState().with(FACING, Direction.NORTH).with(OPEN, false).with(HALF, DoubleBlockHalf.LOWER));
     }
 
     public int getPins() {
@@ -56,13 +62,45 @@ public class PickDoorBlock extends Block {
 
     @Override
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
-        builder.add(FACING, OPEN);
+        builder.add(FACING, OPEN, HALF);
     }
+
 
     @Nullable
     @Override
     public BlockState getPlacementState(ItemPlacementContext ctx) {
-        return getDefaultState().with(FACING, ctx.getHorizontalPlayerFacing());
+        BlockPos pos = ctx.getBlockPos();
+        World world = ctx.getWorld();
+        if (pos.getY() >= world.getTopY() - 1 || !world.getBlockState(pos.up()).canReplace(ctx)) return null;
+        return getDefaultState().with(FACING, ctx.getHorizontalPlayerFacing()).with(OPEN, false).with(HALF, DoubleBlockHalf.LOWER);
+    }
+
+    @Override
+    public void onPlaced(World world, BlockPos pos, BlockState state, @Nullable net.minecraft.entity.LivingEntity placer, ItemStack stack) {
+        world.setBlockState(pos.up(), state.with(HALF, DoubleBlockHalf.UPPER), Block.NOTIFY_ALL);
+    }
+
+    @Override
+    public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighborState,
+                                                net.minecraft.world.WorldAccess world, BlockPos pos, BlockPos neighborPos) {
+        DoubleBlockHalf half = state.get(HALF);
+        if (direction.getAxis() == Direction.Axis.Y && (half == DoubleBlockHalf.LOWER) == (direction == Direction.UP)
+                && !(neighborState.isOf(this) && neighborState.get(HALF) != half)) {
+            return Blocks.AIR.getDefaultState();
+        }
+        return super.getStateForNeighborUpdate(state, direction, neighborState, world, pos, neighborPos);
+    }
+
+    @Override
+    public void onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
+        if (!world.isClient && player.isCreative()) {
+            BlockPos other = state.get(HALF) == DoubleBlockHalf.LOWER ? pos.up() : pos.down();
+            BlockState os = world.getBlockState(other);
+            if (os.isOf(this)) {
+                world.setBlockState(other, Blocks.AIR.getDefaultState(), Block.NOTIFY_ALL | Block.SKIP_DROPS);
+            }
+        }
+        super.onBreak(world, pos, state, player);
     }
 
     @Override
@@ -121,7 +159,7 @@ public class PickDoorBlock extends Block {
         ServerWorld sw = (ServerWorld) world;
 
         if (state.get(OPEN)) {
-            lock(sw, pos, this, state.get(FACING).getAxis());
+            player.sendMessage(Text.literal("Дверь вскрыта и остаётся открытой.").formatted(Formatting.GRAY), true);
             return ActionResult.CONSUME;
         }
 

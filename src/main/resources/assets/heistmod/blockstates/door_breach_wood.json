@@ -1,7 +1,10 @@
 {
-  "variants": {
-    "": {
-      "model": "heistmod:block/door_breach_wood"
-    }
+ "variants": {
+  "half=lower": {
+   "model": "heistmod:block/door_breach_wood"
+  },
+  "half=upper": {
+   "model": "heistmod:block/door_breach_wood"
   }
+ }
 }
