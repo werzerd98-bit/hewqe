@@ -17,10 +17,12 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.world.World;
 
-/** Фургон: принимает сумки (брошенные рядом или поднесённые ПКМ) и платит изумрудами. */
+/** Фургон: принимает сумки (брошенные рядом или поднесённые ПКМ) и платит долларами (пачками купюр). */
 public class EscapeVanBlockEntity extends BlockEntity {
-    public static final int EMERALDS_PER_MONEY_UNIT = 3;
-    public static final int EMERALDS_PER_GOLD_UNIT = 6;
+    public static final int DOLLARS_PER_MONEY_BAG = 20000;
+    public static final int DOLLARS_PER_GOLD_BAG = 40000;
+    /** Одна пачка купюр в выплате. */
+    public static final int DOLLARS_PER_BUNDLE = 1000;
 
     private int moneyTotal;
     private int goldTotal;
@@ -45,17 +47,17 @@ public class EscapeVanBlockEntity extends BlockEntity {
         if (gold) goldTotal += units; else moneyTotal += units;
         markDirty();
 
-        int left = units * (gold ? EMERALDS_PER_GOLD_UNIT : EMERALDS_PER_MONEY_UNIT);
-        int reward = left;
+        int reward = units * (gold ? DOLLARS_PER_GOLD_BAG : DOLLARS_PER_MONEY_BAG);
+        int left = reward / DOLLARS_PER_BUNDLE;
         while (left > 0) {
             int n = Math.min(64, left);
-            Block.dropStack(world, pos.up(), new ItemStack(Items.EMERALD, n));
+            Block.dropStack(world, pos.up(), new ItemStack(ModItems.CASH_BUNDLE, n));
             left -= n;
         }
 
         world.playSound(null, pos, SoundEvents.ENTITY_PLAYER_LEVELUP, SoundCategory.BLOCKS, 1.0f, 1.2f);
-        Text msg = Text.literal("Сумка сдана (" + (gold ? "золото" : "деньги") + " ×" + units + "): +" + reward
-                + " изумрудов. Всего: деньги " + moneyTotal + ", золото " + goldTotal)
+        Text msg = Text.literal("Сумка сдана (" + (gold ? "золото" : "деньги") + " ×" + units + "): +$" + String.format("%,d", reward).replace(',', ' ')
+                + ". Сдано сумок: деньги " + moneyTotal + ", золото " + goldTotal)
                 .formatted(Formatting.GREEN);
         for (ServerPlayerEntity p : world.getPlayers()) {
             if (p.squaredDistanceTo(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5) < 16 * 16) {

@@ -71,7 +71,7 @@ public final class LootBags {
 
         ItemStack off = p.getOffHandStack();
         if (off.getItem() instanceof LootBagItem) {
-            int amp = LootBagItem.units(off) >= LootBagItem.CAPACITY ? 1 : 0;
+            int amp = LootBagItem.KIND_GOLD.equals(LootBagItem.kind(off)) ? 2 : 1;
             p.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 20, amp, false, false, false));
         }
     }

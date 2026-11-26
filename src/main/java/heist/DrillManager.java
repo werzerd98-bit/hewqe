@@ -196,7 +196,15 @@ public final class DrillManager {
 
             if (s.ticks >= s.total) {
                 finish(world, pos, state);
-                if (s.drill != null) broadcastStatus(world, s.drill, 3, 0, s.total);
+                if (s.drill != null) {
+                    broadcastStatus(world, s.drill, 3, 0, s.total);
+                    // отработавший бур исчезает
+                    if (world.getBlockState(s.drill).getBlock() instanceof DrillBlock) {
+                        world.spawnParticles(ParticleTypes.POOF, s.drill.getX() + 0.5, s.drill.getY() + 0.5,
+                                s.drill.getZ() + 0.5, 12, 0.3, 0.3, 0.3, 0.03);
+                        world.removeBlock(s.drill, false);
+                    }
+                }
                 it.remove();
             }
         }

@@ -22,7 +22,7 @@ import java.util.List;
 public class LootBagItem extends Item {
     public static final String KIND_MONEY = "money";
     public static final String KIND_GOLD = "gold";
-    public static final int CAPACITY = 4;
+    public static final int CAPACITY = 1;
 
     public LootBagItem(Settings settings) {
         super(settings);
@@ -50,10 +50,10 @@ public class LootBagItem extends Item {
     @Override
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
         boolean gold = KIND_GOLD.equals(kind(stack));
-        tooltip.add(Text.literal((gold ? "Золото: " : "Деньги: ") + units(stack) + " / " + CAPACITY)
+        tooltip.add(Text.literal(gold ? "Золото" : "Деньги")
                 .formatted(gold ? Formatting.GOLD : Formatting.GREEN));
         tooltip.add(Text.literal("Носится только в левой руке (спец-слот)").formatted(Formatting.GRAY));
-        tooltip.add(Text.literal("ПКМ — бросить, Shift+ПКМ — распаковать").formatted(Formatting.GRAY));
+        tooltip.add(Text.literal("ПКМ — бросить").formatted(Formatting.GRAY));
     }
 
     @Override
@@ -61,28 +61,11 @@ public class LootBagItem extends Item {
         ItemStack stack = user.getStackInHand(hand);
         if (world.isClient) return TypedActionResult.success(stack, true);
 
-        if (user.isSneaking()) {
-            unpack(world, user, stack);
-        } else {
-            ItemEntity bag = new ItemEntity(world, user.getX(), user.getEyeY() - 0.3, user.getZ(), stack.copy());
-            bag.setVelocity(user.getRotationVector().multiply(0.6));
-            bag.setPickupDelay(40);
-            world.spawnEntity(bag);
-        }
+        ItemEntity bag = new ItemEntity(world, user.getX(), user.getEyeY() - 0.3, user.getZ(), stack.copy());
+        bag.setVelocity(user.getRotationVector().multiply(0.6));
+        bag.setPickupDelay(40);
+        world.spawnEntity(bag);
         user.setStackInHand(hand, ItemStack.EMPTY);
         return TypedActionResult.success(ItemStack.EMPTY, false);
-    }
-
-    private static void unpack(World world, PlayerEntity user, ItemStack stack) {
-        boolean gold = KIND_GOLD.equals(kind(stack));
-        Item item = gold ? ModItems.GOLD_BAR : ModItems.CASH_BUNDLE;
-        int total = units(stack) * 9;
-        while (total > 0) {
-            int n = Math.min(total, item.getMaxCount());
-            ItemEntity e = new ItemEntity(world, user.getX(), user.getY() + 0.5, user.getZ(), new ItemStack(item, n));
-            e.setPickupDelay(10);
-            world.spawnEntity(e);
-            total -= n;
-        }
     }
 }

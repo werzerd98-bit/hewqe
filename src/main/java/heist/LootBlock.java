@@ -31,8 +31,7 @@ public class LootBlock extends Block {
                 player.incrementStat(Stats.MINED.getOrCreateStat(this));
                 player.addExhaustion(0.005f);
                 world.playSound(null, pos, SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.PLAYERS, 0.6f, 0.9f);
-                player.sendMessage(Text.literal("Добыча в сумке: " + LootBagItem.units(player.getOffHandStack())
-                        + " / " + LootBagItem.CAPACITY).formatted(Formatting.GREEN), true);
+                player.sendMessage(Text.literal("Добыча в сумке").formatted(Formatting.GREEN), true);
                 return;
             }
             player.sendMessage(Text.literal("Левая рука занята или сумка полна — добыча выпала на землю.")

@@ -32,7 +32,7 @@ public class LootSafeBlock extends Block {
     public static final IntProperty UNITS = IntProperty.of("units", 0, 1);
 
     /** Одна добыча в сейфе весит как целая сумка. */
-    public static final int LOOT_UNITS = 4;
+    public static final int LOOT_UNITS = 1;
 
     private final String kind;
 
@@ -88,10 +88,9 @@ public class LootSafeBlock extends Block {
         } else if (LootBags.tryCollect(player, kind, LOOT_UNITS)) {
             world.setBlockState(pos, state.with(UNITS, 0), Block.NOTIFY_ALL);
             world.playSound(null, pos, SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.PLAYERS, 0.7f, 0.8f);
-            player.sendMessage(Text.literal("Добыча в сумке: " + LootBagItem.units(player.getOffHandStack())
-                    + " / " + LootBagItem.CAPACITY).formatted(Formatting.GREEN), true);
+            player.sendMessage(Text.literal("Добыча в сумке").formatted(Formatting.GREEN), true);
         } else {
-            player.sendMessage(Text.literal("Нужна пустая сумка в левой руке (добыча занимает 4 места).").formatted(Formatting.RED), true);
+            player.sendMessage(Text.literal("Нужна пустая левая рука: добыча кладётся в сумку.").formatted(Formatting.RED), true);
         }
         return ActionResult.CONSUME;
     }
